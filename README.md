@@ -16,3 +16,19 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |,|Get single character from STDIN|
 
 ### Example Program
+
+**Print_0.bf**
+```
+[-]
++++ +++ 
+[> ++++ ++++ < -]
+>[-<+>]<
+.
+```
+
+**Line-By-Line Explanation**
+Line 1: Sets cell to zero. Not necessary in a clean, new program, but good practice anyways.  
+Line 2: Adds the value 6 to current cell.  
+Line 3: Moves to next cell, adds 8 to it, moves back to current cell and subtracts 1. Effectively, multiplies 6 by 8.  
+Line 4: Copies content of the next cell to the current one.  
+Line 5: Prints the content of the cell. Our cell holds the value *48*, so it will print *0*, as that is the ascii code for 48.  

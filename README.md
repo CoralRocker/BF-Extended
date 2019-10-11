@@ -1,6 +1,7 @@
 # BF-Extended
 An extended version of the Brainf**k language that adds a small amount of added Features
 
+---
 # BrainFuck
 ### Existing Features
 
@@ -15,6 +16,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |.|Print ASCII value of cell|
 |,|Get single character from STDIN|
 
+---
 ### Example Program
 
 **Print_0.bf**
@@ -26,7 +28,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 .
 ```
 
-**Line-By-Line Explanation**
+**Line-By-Line Explanation**<br>
 Line 1: Sets cell to zero. Not necessary in a clean, new program, but good practice anyways.  
 Line 2: Adds the value 6 to current cell.  
 Line 3: Moves to next cell, adds 8 to it, moves back to current cell and subtracts 1. Effectively, multiplies 6 by 8.  

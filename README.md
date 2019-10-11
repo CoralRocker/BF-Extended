@@ -51,12 +51,12 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 }
 ```
 **Line-By-Line Explanation**<br>
-Line 1: Clears cells 0 and 1 in the program.<br>
-Line 2: Sets cell 0 to 3 and cell 1 to 2.<br>
-Line 3: Opens the scratch memory on cell 0.<br>
-Line 4: The value of cell 0 in the parent program is 3. Thus, the value of cell 0 in the scratch memory is also 3. Multiplies cell 0 by 3 and places the output in cell 1.<br>
-Line 5: Moves pointer to cell 1.<br>
-Line 6: Exits scratch memory. This returns the value of 6 to cell 0, because the value of the cell in which we exited was 6.<br>
+**Line 1:** Clears cells 0 and 1 in the program.<br>
+**Line 2:** Sets cell 0 to 3 and cell 1 to 2.<br>
+**Line 3:** Opens the scratch memory on cell 0.<br>
+**Line 4:** The value of cell 0 in the parent program is 3. Thus, the value of cell 0 in the scratch memory is also 3. Multiplies cell 0 by 3 and places the output in cell 1.<br>
+**Line 5:** Moves pointer to cell 1.<br>
+**Line 6:** Exits scratch memory. This returns the value of 6 to cell 0, because the value of the cell in which we exited was 6.<br>
 
 **Final Memory Diagram**<br>
 

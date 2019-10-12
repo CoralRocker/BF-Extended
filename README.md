@@ -21,10 +21,10 @@ An extended version of the Brainf**k language that adds a small amount of added 
 
 **ExamplePrograms/Print_0.b**
 ```
-[-]
+[-]>[-]<
 +++ +++ 
-[> ++++ ++++ < -]
->[-<+>]<
+[> ++++ ++++ < -]>
+[-<+>]<
 .
 ```
 

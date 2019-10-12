@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
+
 
 typedef enum boolean {false, true} bool;
 
 int main(int argc, char **argv)
 {
+
+	char fname[LINE_MAX];
+	if(argc < 2){
+		printf("No filename given. Please enter name of file to interpret: ");
+		fgets(fname, LINE_MAX, stdin);
+		fname[strlen(fname)-1] = 0x00;
+	}
+
+
 	/* Pointer */
 	const long PTRSIZE = 16384;
 	unsigned long array[PTRSIZE];
@@ -21,7 +32,7 @@ int main(int argc, char **argv)
 	int *ol;
 
 	/* Files */
-	FILE *f = fopen(argv[1], "r");
+	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
 	
 	bool debug = false;
 	if(argc >= 3)

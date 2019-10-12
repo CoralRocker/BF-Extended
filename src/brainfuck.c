@@ -44,73 +44,98 @@ int main(int argc, char **argv)
 
 	/* Compile Loop */
 	char c;
+	bool comment = false;
 	while((c = fgetc(f)) != EOF)
 	{
-
 		switch(c)
 		{
-			case '>':
-				if(ptrNum + 1 < PTRSIZE)
-				{
-					++p;
-					++ptrNum;
-				}
-				break;
-			case '<':
-				if(ptrNum != 0)
-				{
-					--p;
-					--ptrNum;
-				}
-				break;
-			case '+':
-				++*p;
-				break;
-			case '-':
-				if(*p <= 0)
-					*p = 0;
+			case '/':
+			{
+				int temp = ftell(f);
+				c = fgetc(f);
+				if(c == '*')
+					comment = true;
 				else
-					--*p;
+					fseek(f, temp, SEEK_SET);
 				break;
-			case '.':
-				if(!debug)
-					printf("%c", *p);
+			}
+			case '*':
+			{
+				int temp = ftell(f);
+				c = fgetc(f);
+				if(c == '/')
+					comment = false;
 				else
-					printf("%d\n", *p);
+					fseek(f, temp, SEEK_SET);
 				break;
-			case ',':
-				*p = getchar();
-				break;
-			case '[':
-				++l;
-				*l = ftell(f);
-				
-				break;
-			case ']':
-				if(*p == 0)
-				{	
-					*l = 0;
-					--l;
-				}else{
-					fseek(f, *l, SEEK_SET);
-				}
-				break;
-			case '{':
-				tempPtr = p;
-				p = malloc(sizeof(long)*PTRSIZE);
-				op = p;
-				*p = *tempPtr;
-				tempLoop = l;
-				l = malloc(sizeof(int)*4096);
-				ol = l;
-				break;
-			case '}':
-				*tempPtr = *p;
-				free(op);
-				p = tempPtr;
-				free(ol);
-				l = tempLoop;
-				break;
+			}
+		}
+		if(!comment){
+			switch(c)
+			{
+				case '>':
+					if(ptrNum + 1 < PTRSIZE)
+					{
+						++p;
+						++ptrNum;
+					}
+					break;
+				case '<':
+					if(ptrNum != 0)
+					{
+						--p;
+						--ptrNum;
+					}
+					break;
+				case '+':
+					++*p;
+					break;
+				case '-':
+					if(*p <= 0)
+						*p = 0;
+					else
+						--*p;
+					break;
+				case '.':
+					if(!debug)
+						printf("%c", *p);
+					else
+						printf("%d\n", *p);
+					break;
+				case ',':
+					*p = getchar();
+					break;
+				case '[':
+					++l;
+					*l = ftell(f);
+					
+					break;
+				case ']':
+					if(*p == 0)
+					{	
+						*l = 0;
+						--l;
+					}else{
+						fseek(f, *l, SEEK_SET);
+					}
+					break;
+				case '{':
+					tempPtr = p;
+					p = malloc(sizeof(long)*PTRSIZE);
+					op = p;
+					*p = *tempPtr;
+					tempLoop = l;
+					l = malloc(sizeof(int)*4096);
+					ol = l;
+					break;
+				case '}':
+					*tempPtr = *p;
+					free(op);
+					p = tempPtr;
+					free(ol);
+					l = tempLoop;
+					break;
+			}
 		}
 	}
 	printf("\n");

@@ -46,8 +46,8 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ---
 ## Scratch Memory<br>
 ### Description
-  Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended. <br>
-  Currently, only one _scratch memory_ register can be open at any given instance. This means that _scratch memory_ cannot be placed inside other _scratch memory_ blocks. I am working on a solution for this however. Only one parameter can be passed to the _scratch memory_ at once, and only one cell can be returned from it. This will not change. 
+&nbsp;&nbsp;&nbsp;&nbsp;Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;Currently, only one _scratch memory_ register can be open at any given instance. This means that _scratch memory_ cannot be placed inside other _scratch memory_ blocks. I am working on a solution for this however. Only one parameter can be passed to the _scratch memory_ at once, and only one cell can be returned from it. This will not change. 
 ### Example Program
 **ExamplePrograms/Scratch.b**
 ```

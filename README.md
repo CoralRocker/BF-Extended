@@ -19,12 +19,12 @@ An extended version of the Brainf**k language that adds a small amount of added 
 ---
 ### Example Program
 
-**Print_0.bf**
+**ExamplePrograms/Print_0.b**
 ```
-[-]
+[-]>[-]<
 +++ +++ 
-[> ++++ ++++ < -]
->[-<+>]<
+[> ++++ ++++ < -]>
+[-<+>]<
 .
 ```
 
@@ -38,10 +38,11 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ---
 
 # Brainfuck Extended
-### Added symbols
-#### Scratch Memory<br>
+## Added symbols
+### Scratch Memory<br>
   Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended.   
-**Example Program**
+### Example Program
+**ExamplePrograms/Scratch.b**
 ```
 [-]>[-]<
 +++ > ++ <

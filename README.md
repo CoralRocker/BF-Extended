@@ -43,8 +43,9 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ---
 
 # Brainfuck Extended
-## Added symbols
-### Scratch Memory<br>
+---
+## Scratch Memory<br>
+### Description
   Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended.   
 ### Example Program
 **ExamplePrograms/Scratch.b**
@@ -65,7 +66,7 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 2
 ```
 
-**Line-By-Line Explanation**<br>
+### Line-By-Line Explanation<br>
 **Line 1:** Clears cells 1 and 2 in the program.<br>
 **Line 2:** Sets cell 1 to 3 and cell 2 to 2.<br>
 **Line 3:** Opens the scratch memory on cell 1.<br>
@@ -75,3 +76,5 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 **Line 7:** Sets cell 0 to 6<br>
 **Line 8:** adds 48 (ASCII `0`) to cell 1 and 2.<br>
 **Line 9:** Prints the value of cell 1, prints a newline, prints cell 2.
+
+---

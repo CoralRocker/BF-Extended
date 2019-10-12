@@ -19,7 +19,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 ---
 ### Example Program
 
-**Print_0.bf**
+**ExamplePrograms/Print_0.b**
 ```
 [-]
 +++ +++ 

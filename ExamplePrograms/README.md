@@ -79,3 +79,8 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 **Line 9:** Prints the value of cell 1, prints a newline, prints cell 2.
 
 ---
+## Comments <br>
+### Description
+&nbsp;&nbsp;&nbsp;&nbsp;C-Style comment blocks can be opened using _/*_ and closed using _*/_. Comments opened using _//_ and only lasting one line do not exist. 
+
+---

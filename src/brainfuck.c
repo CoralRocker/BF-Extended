@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>
-
+#include <stdint.h>
 
 typedef enum boolean {false, true} bool;
 
@@ -19,17 +19,17 @@ int main(int argc, char **argv)
 
 	/* Pointer */
 	const long PTRSIZE = 16384;
-	unsigned long array[PTRSIZE];
-	unsigned long *p = array;
-	unsigned long *op;
-	unsigned long ptrNum = 0;
-	unsigned long *tempPtr = p;
+	uint64_t array[PTRSIZE];
+	uint64_t *p = array;
+	uint64_t *op;
+	uint64_t ptrNum = 0;
+	uint64_t *tempPtr = p;
 	memset(p, 0x00, PTRSIZE);
 
-	int loop[4096] = {0};
-	int *l = loop;
-	int *tempLoop = l;
-	int *ol;
+	uint32_t loop[4096] = {0};
+	uint32_t *l = loop;
+	uint32_t *tempLoop = l;
+	uint32_t *ol;
 
 	/* Files */
 	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 		{
 			case '/':
 			{
-				int temp = ftell(f);
+				uint32_t temp = ftell(f);
 				c = fgetc(f);
 				if(c == '*')
 					comment = true;
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 			}
 			case '*':
 			{
-				int temp = ftell(f);
+				uint32_t temp = ftell(f);
 				c = fgetc(f);
 				if(c == '/')
 					comment = false;
@@ -121,11 +121,11 @@ int main(int argc, char **argv)
 					break;
 				case '{':
 					tempPtr = p;
-					p = malloc(sizeof(long)*PTRSIZE);
+					p = malloc(sizeof(uint64_t)*PTRSIZE);
 					op = p;
 					*p = *tempPtr;
 					tempLoop = l;
-					l = malloc(sizeof(int)*4096);
+					l = malloc(sizeof(uint32_t)*4096);
 					ol = l;
 					break;
 				case '}':

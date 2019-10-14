@@ -19,22 +19,16 @@ int main(int argc, char **argv)
 
 
 	/* Pointer */
-//	const long PTRSIZE = 16384;
-//	uint64_t array[PTRSIZE];
-//	uint64_t *p = array;
-//	uint64_t *op;
-//	uint64_t ptrNum = 0;
-//	uint64_t *tempPtr = p;
-//	memset(p, 0x00, PTRSIZE);
-	
 	vector *bfArray = initVector();
 	pushBackVector(bfArray, 0);
 	uint64_t bfArrSize = 1, bfArrPos = 0;
+	vector *tempBFArray;
+	uint64_t tBFArrSize, tBFArrPos;
 
-	uint32_t loop[4096] = {0};
-	uint32_t *l = loop;
-	uint32_t *tempLoop = l;
-	uint32_t *ol;
+	vector *bfLoop = initVector();
+	uint64_t bfLpPos = 0;
+	vector *tempBFLoop;
+	uint64_t tBFLPos;
 
 	/* Files */
 	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
@@ -88,60 +82,76 @@ int main(int argc, char **argv)
 						bfArrPos++;
 					}
 					break;
+
 				case '<':
 					if(bfArrPos != 0)
 					{
 						bfArrPos--;
 					}
 					break;
+
 				case '+':
 					assignVector(bfArray, bfArrPos, atVector(bfArray, bfArrPos) + 1);
 					break;
+
 				case '-':
 					if(atVector(bfArray, bfArrPos) <= 0)
 						assignVector(bfArray, bfArrPos, 0);
 					else
 						assignVector(bfArray, bfArrPos, atVector(bfArray, bfArrPos) - 1);
 					break;
+
 				case '.':
 					if(!debug)
 						printf("%c", atVector(bfArray, bfArrPos));
 					else
 						printf("%d\n", atVector(bfArray, bfArrPos));
 					break;
+
 				case ',':
 					assignVector(bfArray, bfArrPos, getchar());
 					break;
+
 				case '[':
-					++l;
-					*l = ftell(f);
-					
+					pushBackVector(bfLoop, ftell(f));
+					bfLpPos++;
 					break;
+
 				case ']':
-					if(atVector(bfArray, bfArrPos) == 0)
+					if(atVector(bfLoop, bfArrPos) == 0)
 					{	
-						*l = 0;
-						--l;
+						popBackVector(bfLoop);
 					}else{
-						fseek(f, *l, SEEK_SET);
+						fseek(f, backVector(bfLoop), SEEK_SET);
 					}
 					break;
-//				case '{':
-//					tempPtr = p;
-//					p = malloc(sizeof(uint64_t)*PTRSIZE);
-//					op = p;
-//					*p = *tempPtr;
-//					tempLoop = l;
-//					l = malloc(sizeof(uint32_t)*4096);
-//					ol = l;
-//					break;
-//				case '}':
-//					*tempPtr = *p;
-//					free(op);
-//					p = tempPtr;
-//					free(ol);
-//					l = tempLoop;
-//					break;
+
+				case '{':
+					tempBFArray = bfArray;
+					bfArray = initVector();
+					tBFArrPos = bfArrPos;
+					tBFArrSize = bfArrSize;
+					bfArrPos=0;
+					bfArrSize=1;
+					pushBackVector(bfArray, atVector(tempBFArray, tBFArrPos));
+					
+					tempBFLoop = bfLoop;
+					bfLoop = initVector();
+					tBFLPos = bfLpPos;
+					bfLpPos = 0;
+					break;
+
+				case '}':
+					assignVector(tempBFArray, tBFArrPos, atVector(bfArray, bfArrPos));
+					freeVector(bfArray);
+					bfArray = tempBFArray;
+					bfArrPos = tBFArrPos;
+					bfArrSize = tBFArrSize;
+					
+					free(bfLoop);
+					bfLoop = tempBFLoop;
+					bfLpPos = tBFLPos;
+					break;
 			}
 		}
 	}

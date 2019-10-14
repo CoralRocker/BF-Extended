@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 					break;
 
 				case ']':
-					if(atVector(bfLoop, bfArrPos) == 0)
+					if(atVector(bfArray, bfArrPos) == 0)
 					{	
 						popBackVector(bfLoop);
 					}else{

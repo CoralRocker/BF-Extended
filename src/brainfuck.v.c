@@ -155,6 +155,9 @@ int main(int argc, char **argv)
 			}
 		}
 	}
+
+	freeVector(bfArray);
+	freeVector(bfLoop);
 	printf("\n");
 	/* Close Files */
 	fclose(f);

@@ -19,15 +19,15 @@ int main(int argc, char **argv)
 
 	/* Pointer */
 	const long PTRSIZE = 16384;
-	uint64_t array[PTRSIZE];
-	uint64_t *p = array;
+	//uint64_t array[PTRSIZE];
+	uint64_t *p = malloc(sizeof(uint64_t)*PTRSIZE);
 	uint64_t *op;
 	uint64_t ptrNum = 0;
 	uint64_t *tempPtr = p;
 	memset(p, 0x00, PTRSIZE);
 
-	uint32_t loop[4096] = {0};
-	uint32_t *l = loop;
+	//uint32_t loop[4096] = {0};
+	uint32_t *l = malloc(sizeof(uint32_t)*4096);
 	uint32_t *tempLoop = l;
 	uint32_t *ol;
 
@@ -141,4 +141,6 @@ int main(int argc, char **argv)
 	printf("\n");
 	/* Close Files */
 	fclose(f);
+	free(l);
+	free(p);
 }	

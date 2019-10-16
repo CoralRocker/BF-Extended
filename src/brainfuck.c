@@ -3,14 +3,42 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdint.h>
+#include <unistd.h>
 
 typedef enum boolean {false, true} bool;
 
 int main(int argc, char **argv)
 {
+	
+	long PTRSIZE = 16384, LOOPSIZE = 4096;
+	char str[LINE_MAX];
+	char *fname = str;
+	bool debug  = false, name = false;
 
-	char fname[LINE_MAX];
-	if(argc < 2){
+	int opt;
+	while((opt = getopt(argc, argv, "dc:f:l:")) != -1){
+		switch(opt)
+		{
+			case 'c':
+				PTRSIZE = atoi(optarg);
+				break;
+			case 'f':
+				fname = optarg;
+			//	printf("%s :: %d\n", fname, strlen(fname));
+				name = true;
+				break;
+			case 'l':
+				LOOPSIZE = atoi(optarg);
+				break;
+			case 'd':
+				debug = true;
+				break;
+			
+				
+		}
+	}
+
+	if(!name){
 		printf("No filename given. Please enter name of file to interpret: ");
 		fgets(fname, LINE_MAX, stdin);
 		fname[strlen(fname)-1] = 0x00;
@@ -18,7 +46,6 @@ int main(int argc, char **argv)
 
 
 	/* Pointer */
-	const long PTRSIZE = 16384;
 	//uint64_t array[PTRSIZE];
 	uint64_t *p = malloc(sizeof(uint64_t)*PTRSIZE);
 	uint64_t *op;
@@ -27,21 +54,13 @@ int main(int argc, char **argv)
 	memset(p, 0x00, PTRSIZE);
 
 	//uint32_t loop[4096] = {0};
-	uint32_t *l = malloc(sizeof(uint32_t)*4096);
+	uint32_t *l = malloc(sizeof(uint32_t)*LOOPSIZE);
 	uint32_t *tempLoop = l;
 	uint32_t *ol;
 
 	/* Files */
-	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
+	FILE *f = fopen(fname, "r");
 	
-	bool debug = false;
-	if(argc >= 3)
-		if(argv[2][0] == 'd')
-		{
-			printf("Debugging program.\nPrints will be with integers\n-----------------\n");
-			debug = true;
-		}
-
 	/* Compile Loop */
 	char c;
 	bool comment = false;

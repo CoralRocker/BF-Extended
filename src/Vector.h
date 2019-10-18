@@ -141,9 +141,11 @@ void copyVector(vector *src, vector *dst, size_t size)
 
 /* Same as deleteVector() methods, except it only works on the last element of the vector.
  */
-void popBackVector(vector *v)
+void* popBackVector(vector *v)
 {
+	void* temp = (v->size > 0) ? v->arr[v->size-1] : 0;
 	eraseVector(v, v->size-1);
+	return temp;
 }
 
 /* Swaps the memory address of two given vectors. Doesn't affect any information stored by vectors.

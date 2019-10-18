@@ -7,6 +7,12 @@
 
 typedef enum boolean {false, true} bool;
 
+typedef struct scratchpad {
+	vector *arrPtr, *loopPtr;
+	vector *prevArr, *prevLoop;
+	uint64_t prevArrSize, prevArrPos, prevLoopPos;
+} scratchpad;
+
 int main(int argc, char **argv)
 {
 
@@ -29,6 +35,9 @@ int main(int argc, char **argv)
 	uint64_t bfLpPos = 0;
 	vector *tempBFLoop;
 	uint64_t tBFLPos;
+
+	vector *ScratchArr = initVector();
+	uint64_t scratchPos = 0;
 
 	/* Files */
 	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
@@ -127,18 +136,22 @@ int main(int argc, char **argv)
 					break;
 
 				case '{':
-					tempBFArray = bfArray;
-					bfArray = initVector();
-					tBFArrPos = bfArrPos;
-					tBFArrSize = bfArrSize;
-					bfArrPos=0;
-					bfArrSize=1;
-					pushBackVector(bfArray, atVector(tempBFArray, tBFArrPos));
+					scratchpad *temp = malloc(sizeof(scratchpad));
+					temp->arrPtr = initVector();
+					temp->loopPtr = initVector();
+					temp->prevArr = bfArray;
+					temp->prevLoop = bfLoop;
+					temp->prevArrSize = bfArrSize;
+					temp->prevArrPos = bfArrPos;
+					temp->prevLoopPos = bfLpPos;
 					
-					tempBFLoop = bfLoop;
-					bfLoop = initVector();
-					tBFLPos = bfLpPos;
+					bfArray = temp->arrPtr;
+					bfLoop = temp->loopPtr;
+					bfArrSize = 1;
+					bfArrPos = 0;
 					bfLpPos = 0;
+					pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
+					pushBackVector(ScratchArr, temp);
 					break;
 
 				case '}':

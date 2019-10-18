@@ -37,7 +37,6 @@ int main(int argc, char **argv)
 	uint64_t tBFLPos;
 
 	vector *ScratchArr = initVector();
-	uint64_t scratchPos = 0;
 
 	/* Files */
 	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
@@ -136,6 +135,7 @@ int main(int argc, char **argv)
 					break;
 
 				case '{':
+					{
 					scratchpad *temp = malloc(sizeof(scratchpad));
 					temp->arrPtr = initVector();
 					temp->loopPtr = initVector();
@@ -153,18 +153,21 @@ int main(int argc, char **argv)
 					pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
 					pushBackVector(ScratchArr, temp);
 					break;
-
+					}
 				case '}':
-					assignVector(tempBFArray, tBFArrPos, atVector(bfArray, bfArrPos));
-					freeVector(bfArray);
-					bfArray = tempBFArray;
-					bfArrPos = tBFArrPos;
-					bfArrSize = tBFArrSize;
-					
-					free(bfLoop);
-					bfLoop = tempBFLoop;
-					bfLpPos = tBFLPos;
+					{
+					scratchpad *temp = popBackVector(ScratchArr);
+					bfArray = temp->prevArr;
+					bfLoop = temp->prevLoop;
+					assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
+					freeVector(temp->arrPtr);
+					freeVector(temp->loopPtr);
+					bfArrSize = temp->prevArrSize;
+					bfArrPos = temp->prevArrPos;
+					bfLpPos = temp->prevLoopPos;
+					free(temp);
 					break;
+					}
 			}
 		}
 	}

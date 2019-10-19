@@ -44,6 +44,7 @@ int main(int argc, char **argv)
 	size_t len = 0;
 	bool comment = false;
 	bool breakout = false;
+	bool loopOn =  false;
 	FILE *stream;
 	while(getline(&line, &len, stdin) != -1)
 	{

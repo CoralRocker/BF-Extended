@@ -1,12 +1,16 @@
 CC=gcc
 CFLAGS=-Wall
 
-all: src/Deprecated/brainfuck.c src/brainfuck.v.c
-	$(CC) $(CFLAGS) src/Deprecated/brainfuck.c -o bfc
-	$(CC) $(CFLAGS) src/brainfuck.v.c -o bfcv
+all: src/brainfuck.c src/brainfuck-env.c
+	$(CC) $(CFLAGS) src/brainfuck.c -o bfe-int
+	$(CC) $(CFLAGS) src/brainfuck-env.c -o bfe-env
+
 vector: src/brainfuck.v.c
-	$(CC) $(CFLAGS) src/brainfuck.v.c -o bfcv
+	$(CC) $(CFLAGS) src/brainfuck.v.c -o bfe-int
 	
+env: src/brainfuck-env.c
+	$(CC) $(CFLAGS) src/brainfuck-env.c -o bfe-env
+
 deprecated: src/Deprecated/brainfuck.c
-	$(CC) $(CFLAGS) src/brainfuck.c -o bfc
+	$(CC) $(CFLAGS) src/brainfuck.c -o bfe-int-dep
 	

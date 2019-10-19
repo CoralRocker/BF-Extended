@@ -40,10 +40,12 @@ int main(int argc, char **argv)
 	bool debug = false;
 	
 	/* Compile Loop */
-	char *line, c;
+	char *line = NULL, c;
+	size_t len = 0;
 	bool comment = false;
+	bool breakout = false;
 	FILE *stream;
-	while(getline(line, 0, stdin) != -1)
+	while(getline(&line, &len, stdin) != -1)
 	{
 		stream = fmemopen(line, strlen(line), "r");
 		while((c = fgetc(stream)) != EOF)
@@ -162,11 +164,20 @@ int main(int argc, char **argv)
 						free(temp);
 						break;
 						}
+					case 'q':
+						breakout = true;
+						break;
+					case '?':
+						printf("enter q or \"quit\" to exit program. Loops must all be on same loop\n");
+						break;
 				}
 			}
 		}
 		fclose(stream);
 		free(line);
+		len = 0;
+		if(breakout)
+			break;
 	}
 	freeVector(bfArray);
 	freeVector(bfLoop);

@@ -16,14 +16,6 @@ typedef struct scratchpad {
 int main(int argc, char **argv)
 {
 
-	//char fname[LINE_MAX];
-	//if(argc < 2){
-	//	printf("No filename given. Please enter name of file to interpret: ");
-	//	fgets(fname, LINE_MAX, stdin);
-	//	fname[strlen(fname)-1] = 0x00;
-	//}
-
-
 	/* Pointer */
 	vector *bfArray = initVector();
 	pushBackVector(bfArray, 0);
@@ -33,19 +25,18 @@ int main(int argc, char **argv)
 	uint64_t bfLpPos = 0;
 
 	vector *ScratchArr = initVector();
-
-	/* Files */
-	//FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
 	
 	bool debug = false;
 	
 	/* Compile Loop */
 	char *line = NULL, c;
-	size_t len = 0;
+	size_t len = 0, numloops=0, lSize;
 	bool comment = false;
 	bool breakout = false;
 	bool loopOn =  false;
-	FILE *stream;
+	char *loopStreamArr;
+	FILE *stream, *loopStream;
+	loopStream = open_memstream(&loopStreamArr, &lSize);
 	while(getline(&line, &len, stdin) != -1)
 	{
 		stream = fmemopen(line, strlen(line), "r");
@@ -118,8 +109,11 @@ int main(int argc, char **argv)
 						break;
 	
 					case '[':
-						pushBackVector(bfLoop, (void*) ftell(stream));
+						pushBackVector(bfLoop, (void*) ftell(loopStream));
 						bfLpPos++;
+						if(loopOn == false)
+							loopOn = true;
+						numloops++; 
 						break;
 	
 					case ']':
@@ -127,7 +121,15 @@ int main(int argc, char **argv)
 						{	
 							popBackVector(bfLoop);
 						}else{
-							fseek(stream, (long int) backVector(bfLoop), SEEK_SET);
+							fseek(loopStream, (long int) backVector(bfLoop), SEEK_SET);
+						}
+						numloops--;
+						if(numloops == 0)
+						{
+							fclose(loopStream);
+							free(loopStreamArr);
+							loopStream = open_memstream(&loopStreamArr, &lSize);
+							loopOn = false;
 						}
 						break;
 	
@@ -172,6 +174,10 @@ int main(int argc, char **argv)
 						printf("enter q or \"quit\" to exit program. Loops must all be on same loop\n");
 						break;
 				}
+			}
+			if(loopOn)
+			{
+				fputc(c, loopStream);
 			}
 		}
 		fclose(stream);

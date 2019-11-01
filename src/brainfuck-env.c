@@ -58,10 +58,12 @@ int main(int argc, char **argv)
 	size_t len = 0;
 	off_t pos;
 	bool breakout = false;
+	char* nLine;
 
-	printf("%s%sBRAINFUCK-ENV %f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
+	printf("%s%sBRAINFUCK-ENV %3f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
 	while(getline(&line, &len, stdin) != -1)
 	{
+		nLine = "";
 		pos = ftell(f);
 		fputs(line, f);
 		fseek(f, pos, SEEK_SET);
@@ -111,6 +113,7 @@ int main(int argc, char **argv)
 							printf("%c", (int) atVector(bfArray, bfArrPos));
 						else
 							printf("%d\n", (int) atVector(bfArray, bfArrPos));
+						nLine = "\n";
 						break;
 	
 					case ',':
@@ -172,7 +175,7 @@ int main(int argc, char **argv)
 		len = 0;
 		if(breakout)
 			break;
-		printf("\n%s%sBRAINFUCK-ENV %f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
+		printf("%s%s%sBRAINFUCK-ENV %3f =>%s ", nLine, KRED, BYLW, BFE_ENV_VERSION, KNRM);
 	}
 	freeVector(bfArray);
 	freeVector(bfLoop);

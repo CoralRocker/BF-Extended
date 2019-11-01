@@ -5,6 +5,28 @@
 #include <stdint.h>
 #include "Vector.h"
 
+const float BFE_ENV_VERSION = 1.0;
+
+const char* KRED = "\033[31m";
+const char* KBLK = "\033[30m";
+const char* KGRN = "\033[32m";
+const char* KYLW = "\033[33m";
+const char* KBLU = "\033[34m";
+const char* KMGA = "\033[35m";
+const char* KCYN = "\033[36m";
+const char* KWHT = "\033[37m";
+
+const char* BRED = "\033[41m";
+const char* BBLK = "\033[40m";
+const char* BGRN = "\033[42m";
+const char* BYLW = "\033[43m";
+const char* BBLU = "\033[44m";
+const char* BMGA = "\033[45m";
+const char* BCYN = "\033[46m";
+const char* BWHT = "\033[47m";
+
+const char* KNRM = "\033[0m";
+
 typedef enum boolean {false, true} bool;
 
 typedef struct scratchpad {
@@ -37,6 +59,7 @@ int main(int argc, char **argv)
 	off_t pos;
 	bool breakout = false;
 
+	printf("%s%sBRAINFUCK-ENV %f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
 	while(getline(&line, &len, stdin) != -1)
 	{
 		pos = ftell(f);
@@ -149,6 +172,7 @@ int main(int argc, char **argv)
 		len = 0;
 		if(breakout)
 			break;
+		printf("\n%s%sBRAINFUCK-ENV %f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
 	}
 	freeVector(bfArray);
 	freeVector(bfLoop);

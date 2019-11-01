@@ -15,15 +15,6 @@ typedef struct scratchpad {
 
 int main(int argc, char **argv)
 {
-
-	char fname[LINE_MAX];
-	if(argc < 2){
-		printf("No filename given. Please enter name of file to interpret: ");
-		fgets(fname, LINE_MAX, stdin);
-		fname[strlen(fname)-1] = 0x00;
-	}
-
-
 	/* Pointer */
 	vector *bfArray = initVector();
 	pushBackVector(bfArray, 0);
@@ -41,7 +32,6 @@ int main(int argc, char **argv)
 	
 	/* Compile Loop */
 	char c;
-	bool comment = false;
 	char *line = NULL;
 	size_t len = 0;
 	off_t pos;

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <limits.h>
+#include <signal.h>
 #include <stdint.h>
 #include "Vector.h"
 
@@ -35,8 +35,14 @@ typedef struct scratchpad {
 	uint64_t prevArrSize, prevArrPos, prevLoopPos;
 } scratchpad;
 
+static void catch_sigint(int signo){
+//	printf("\n%s%s CAUGHT EITHER SIGTERM OR SIGINT --BRAINFUCK-ENV %3f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);	
+}
+
 int main(int argc, char **argv)
 {
+	signal(SIGINT, catch_sigint);
+	signal(SIGTERM, catch_sigint);
 	/* Pointer */
 	vector *bfArray = initVector();
 	pushBackVector(bfArray, 0);

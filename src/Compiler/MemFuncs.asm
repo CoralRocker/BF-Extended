@@ -6,7 +6,7 @@ SECTION .text
 ;	rcx - size of items in bytes
 ;	rdx - dst pointer
 asm_memcpy:
-	mov rdx, rax
+	mov [rdx], rax
 	add rax, rcx
 	add rdx, rcx
 	dec rbx

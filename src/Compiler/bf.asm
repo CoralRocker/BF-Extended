@@ -1,39 +1,51 @@
-;; %include "MemFuncs.asm"
+%include "MemFuncs.asm"
 
 section .bss
+	buf resq 5
+	buflen equ ($-buf)/8
 section .data
-	array db 1,2,3,4,5
-	arraylen equ $-array			; array length * 4 = number of elements
+	dat dq 0,1,2,3,4
+	datlen equ ($-dat)/8
 section .text
-	global main:
-main:
-	mov	r8, array					  ; get pointer to array
-	mov	r9, arraylen 			   ; edi = number of array elements
-.printArr:
-	mov	rax, 4
-	mov 	rbx, 1
-	mov	rdx, 1
+	global _start
 
-	add 	BYTE [r8], 48
-	mov 	rcx, r8
-	int 	0x80
-	sub 	BYTE [r8], 48
-	inc 	r8
-	dec 	r9
-	jnz 	.printArr
+putchar:
+	mov rax, 4
+	mov rbx, 1
+	mov rdx, 1
+	int 80h
+	ret
 
+_start:
+	mov	r8, dat
+	mov	r9, datlen
 
-.PrintLineFeed:
-	sub	rsi, 4
-	mov	byte [rsi], 10
-	mov	rdx, 1
-	mov	rcx, rsi
-	mov	rbx, 1
-	mov	rax, 4
-	int	0x80
-	add	rsi, 4						  ; not needed since next call is exit, but learn good techniques.
+loop1:
+	mov rdi, r8
+	add QWORD [rdi], 48
+	mov rcx, rdi
+	call putchar
+	add r8, 8
+	dec r9
+	jnz loop1
+	
+	mov rax, dat
+	mov rbx, 2
+	mov rcx, 8
+	mov rdx, buf
+	call asm_memcpy
+	mov r8, buf
+	mov r9, buflen
+loop2:
+	mov rdi, r8
+	add QWORD [rdi], 48
+	mov rcx, rdi
+	call putchar
+	add r8, 8
+	dec r9
+	jnz loop2
 
-exit: 
+exit:
 	mov	rbx, 0
 	mov	rax, 1
 	int 80H

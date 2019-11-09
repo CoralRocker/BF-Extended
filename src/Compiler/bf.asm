@@ -1,47 +1,39 @@
-SECTION .bss
-	buffer resq 64
+;; %include "MemFuncs.asm"
 
-SECTION .text
-	global _start
+section .bss
+section .data
+	array db 1,2,3,4,5
+	arraylen equ $-array			; array length * 4 = number of elements
+section .text
+	global main:
+main:
+	mov	r8, array					  ; get pointer to array
+	mov	r9, arraylen 			   ; edi = number of array elements
+.printArr:
+	mov	rax, 4
+	mov 	rbx, 1
+	mov	rdx, 1
 
-; FUNC DEFS
-print_char: ; Must define RCX before calling
-	push rax
-	push rbx
-	push rdx
-	
-	mov rax, 4
-	mov rbx, 1
-	mov rdx, 1
-	int 0x80
+	add 	BYTE [r8], 48
+	mov 	rcx, r8
+	int 	0x80
+	sub 	BYTE [r8], 48
+	inc 	r8
+	dec 	r9
+	jnz 	.printArr
 
-	pop rdx
-	pop rbx
-	pop rax
-	ret	
 
-_start:
-	mov r8, buffer
+.PrintLineFeed:
+	sub	rsi, 4
+	mov	byte [rsi], 10
+	mov	rdx, 1
+	mov	rcx, rsi
+	mov	rbx, 1
+	mov	rax, 4
+	int	0x80
+	add	rsi, 4						  ; not needed since next call is exit, but learn good techniques.
 
-program:
-	add BYTE [r8], 6
-_loop1:
-	inc r8
-	add BYTE [r8], 8
-	dec r8
-	dec BYTE [r8]
-	jnz _loop1
-	
-	inc r8
-	mov rcx, r8
-	call print_char 
-	mov rax, 4
-	mov rbx, 1
-	mov rcx, 10
-	mov rdx, 1
-	int 0x80
-
-exit:
-	mov rax, 1
-	mov rbx, 0
-	int 0x80
+exit: 
+	mov	rbx, 0
+	mov	rax, 1
+	int 80H

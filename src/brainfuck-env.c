@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 	bool breakout = false;
 	char* nLine;
 
-	printf("%s%sBRAINFUCK-ENV %3f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
+	printf("%s%sBRAINFUCK-ENV %.2f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
 	while(getline(&line, &len, stdin) != -1)
 	{
 		nLine = "";
@@ -75,6 +75,9 @@ int main(int argc, char **argv)
 				case 'Q':
 					breakout = true;
 					break;
+				case '?':
+					printf("Brainfuck Usage\
+						"):
 			}
 			if(!breakout){
 				switch(c)
@@ -175,7 +178,7 @@ int main(int argc, char **argv)
 		len = 0;
 		if(breakout)
 			break;
-		printf("%s%s%sBRAINFUCK-ENV %3f =>%s ", nLine, KRED, BYLW, BFE_ENV_VERSION, KNRM);
+		printf("%s%s%sBRAINFUCK-ENV %.2f =>%s ", nLine, KRED, BYLW, BFE_ENV_VERSION, KNRM);
 	}
 	freeVector(bfArray);
 	freeVector(bfLoop);

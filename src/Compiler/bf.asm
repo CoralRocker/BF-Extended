@@ -4,7 +4,7 @@ section .bss
 	buf resq 5
 	buflen equ ($-buf)/8
 section .data
-	dat dq 0,1,2,3,4
+	dat dq 40,41,42,43,44
 	datlen equ ($-dat)/8
 section .text
 	global _start
@@ -22,7 +22,7 @@ _start:
 
 loop1:
 	mov rdi, r8
-	add QWORD [rdi], 48
+	; add QWORD [rdi], 48
 	mov rcx, rdi
 	call putchar
 	add r8, 8
@@ -38,7 +38,7 @@ loop1:
 	mov r9, buflen
 loop2:
 	mov rdi, r8
-	add QWORD [rdi], 48
+	; add QWORD [rdi], 48
 	mov rcx, rdi
 	call putchar
 	add r8, 8

@@ -28,3 +28,7 @@
 | Make target | input file(s) | Output Executable(s) |
 |:-:|:-|:-|
 |all|[src/Interpreter/brainfuck-env.c](src/Interpreter/brainfuck-env.c); [src/Interpreter/brainfuck.c](src/Interpreter/brainfuck.c)|bfe-int; bfe-env|
+|vector|[src/Interpreter/brainfuck.c](src/Interpreter/brainfuck.c)|bfe-int|
+|env|[src/Interpreter/brainfuck-env.c](src/Interpreter/brainfuck-env.c)|bfe-env|
+|deprecated|[src/Interpreter/Deprecated/brainfuck.c](src/Interpreter/Deprecated/brainfuck.c)|bfe-int-dep|
+

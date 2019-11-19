@@ -82,8 +82,7 @@ int main(int argc, char **argv)
 					breakout = true;
 					break;
 				case '?':
-					printf("Brainfuck Usage\
-						"):
+					printf("Brainfuck Usage\n");
 			}
 			if(!breakout){
 				switch(c)

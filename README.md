@@ -25,3 +25,6 @@
 
 ## [Makefile](makefile)
 
+|:-:|:-|:-|
+|Make target|input file(s)|Output Executable(s)|
+|all|[src/Interpreter/brainfuck-env.c](src/Interpreter/brainfuck-env.c); [src/Interpreter/brainfuck.c](src/Interpreter/brainfuck.c)|bfe-int; bfe-env|

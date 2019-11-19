@@ -1,51 +1,24 @@
-%include "MemFuncs.asm"
+global _start
 
-section .bss
-	buf resq 5
-	buflen equ ($-buf)/8
-section .data
-	dat dq 40,41,42,43,44
-	datlen equ ($-dat)/8
-section .text
-	global _start
+SECTION .bss
+	dst resb 1
+SECTION .data
+	src db 48
+SECTION .text
+_start:
+	mov r8b, src
+	mov r9b, dst
+	
+_loop:
+		mov r10b, [r9b]
+	mov [dst], r10b
 
-putchar:
 	mov rax, 4
 	mov rbx, 1
+	mov rcx, dst
 	mov rdx, 1
-	int 80h
-	ret
+	int 0x80
 
-_start:
-	mov	r8, dat
-	mov	r9, datlen
-
-loop1:
-	mov rdi, r8
-	; add QWORD [rdi], 48
-	mov rcx, rdi
-	call putchar
-	add r8, 8
-	dec r9
-	jnz loop1
-	
-	mov rax, dat
-	mov rbx, 2
-	mov rcx, 8
-	mov rdx, buf
-	call asm_memcpy
-	mov r8, buf
-	mov r9, buflen
-loop2:
-	mov rdi, r8
-	; add QWORD [rdi], 48
-	mov rcx, rdi
-	call putchar
-	add r8, 8
-	dec r9
-	jnz loop2
-
-exit:
-	mov	rbx, 0
-	mov	rax, 1
-	int 80H
+	mov rax, 1
+	mov rbx, 0
+	int 0x80

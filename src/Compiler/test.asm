@@ -4,7 +4,7 @@ SECTION .bss
 	
 	char resb 1
 SECTION .data
-	src db 40,41,42,43,44
+	src db 48,49,50,51,52
 	srclen equ ($-src)
 SECTION .text
 	global _start
@@ -21,15 +21,10 @@ _start:
 	mov r10, srclen
 loop1:
 	mov rdi, r8
-;	add byte[rdi], 48
 	mov rcx, rdi
 	call putchar
-;	mov byte[char], 10
-;	mov rcx, char
-;	call putchar
-	mov [r9], r8
+	mov BYTE [dest], BYTE [r8]
 	mov rdi, r9
-;	add byte[rdi], 48
 	mov rcx, rdi
 	call putchar
 	mov byte[char], 10
@@ -45,11 +40,9 @@ loop1:
 	mov r10, srclen
 loop2:
 	mov rdi, r8
-;	add byte[rdi], 48
 	mov rcx, rdi
 	call putchar
 	mov rdi, r9
-;	add byte[rdi], 48
 	mov rcx, rdi
 	call putchar
 	mov byte[char], 10

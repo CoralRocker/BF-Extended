@@ -22,3 +22,6 @@
 ## Compiler
 ### [src/Compiler/](src/Compiler/)
 &nbsp;&nbsp;&nbsp;&nbsp;Still working out the way I want this to work. Therefore, nothing actually works in here yet. Hence, no file, in C or otherwise. It will compile directly to ASM when its done, but there might be a version which compiles to C. I don't know yet. No compiler code is written yet
+
+## [Makefile](makefile)
+

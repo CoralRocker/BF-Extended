@@ -7,3 +7,8 @@
 **[src/Interpreter/Deprecated/](src/Interpreter/Deprecated):** The source code for the deprecated interpreter. If any more become deprecated, they'll be found here. <br>
 **[src/Compiler/](src/Compiler/):** The source code for the compiler will be here. The compiler isn't yet written though. Sorry.<br>
 
+# READMEs
+
+## [Information On Code](CODE.md)
+
+## [Information On Language](BRAINFUCK.md)

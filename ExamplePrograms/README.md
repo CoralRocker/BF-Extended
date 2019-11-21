@@ -9,6 +9,27 @@
 0
 0
 ```
+### [Breakpoints-Extended.b](Breakpoints-Extended.b)
+&nbsp;&nbsp;&nbsp;&nbsp;This program's purpose is to test the capabilities of the new brainfuck interpreter.
+
+#### Expected output:
+```
+00
+```
+#### Bad outputs:
+**Comments Not Working?**
+```
+100
+```
+Anything other than two characters being printed means comments didn't work...<br>
+**Scratch Memory Not Working?**
+```
+50
+```
+**Return-to-0 Operator Not Working?**
+```
+01
+```
 
 ### [CharRead.b](CharRead.b)
 &nbsp;&nbsp;&nbsp;&nbsp;Reads input from the terminal until a newline is entered. Then, prints it back out.

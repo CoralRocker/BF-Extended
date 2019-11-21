@@ -158,6 +158,9 @@ int main(int argc, char **argv)
 					free(temp);
 					break;
 					}
+				case '^':
+					bfArrPos = 0;
+					break;
 			}
 		}
 	}

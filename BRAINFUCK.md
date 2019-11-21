@@ -88,5 +88,11 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ### Description
 &nbsp;&nbsp;&nbsp;&nbsp;With the _^_ command, the instruction pointer is returned to the start of the program. 
 
+---
+## Print Number
+### Description
+<p>&nbsp;&nbsp;&nbsp;&nbsp;The <i>#</i> command prints the number in the current cell instead of interpreting it as an ASCII code.</p>
+
+---
 
 # [RETURN TO README](README.md)

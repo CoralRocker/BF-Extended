@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	/* Files */
 	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
 	
-	bool debug = false;
+	bool debug = (argc > 2) ? (argv[2][0] == 'd') : false;
 	
 	/* Compile Loop */
 	char c;
@@ -161,6 +161,10 @@ int main(int argc, char **argv)
 				case '^':
 					bfArrPos = 0;
 					break;
+				case '#':
+					printf("%d", atVector(bfArray, bfArrPos));
+					break;
+
 			}
 		}
 	}

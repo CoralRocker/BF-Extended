@@ -91,7 +91,7 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ---
 ## Print Number
 ### Description
-&nbsp;&nbsp;&nbsp;&nbsp;The `#` command prints the number in the current cell instead of interpreting it as an ASCII code. 
+&nbsp;&nbsp;&nbsp;&nbsp;The _&#35;_ command prints the number in the current cell instead of interpreting it as an ASCII code. 
 ---
 
 # [RETURN TO README](README.md)

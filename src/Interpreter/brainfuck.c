@@ -28,27 +28,17 @@ int main(int argc, char **argv)
 	vector *bfArray = initVector();
 	pushBackVector(bfArray, 0);
 	uint64_t bfArrSize = 1, bfArrPos = 0;
-	vector *tempBFArray;
-	uint64_t tBFArrSize, tBFArrPos;
 
 	vector *bfLoop = initVector();
 	uint64_t bfLpPos = 0;
-	vector *tempBFLoop;
-	uint64_t tBFLPos;
 
 	vector *ScratchArr = initVector();
 
 	/* Files */
 	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
 	
-	bool debug = false;
-	if(argc >= 3)
-		if(argv[2][0] == 'd')
-		{
-			printf("Debugging program.\nPrints will be with integers\n-----------------\n");
-			debug = true;
-		}
-
+	bool debug = (argc > 2) ? (argv[2][0] == 'd') : false;
+	
 	/* Compile Loop */
 	char c;
 	bool comment = false;
@@ -111,17 +101,17 @@ int main(int argc, char **argv)
 
 				case '.':
 					if(!debug)
-						printf("%c", atVector(bfArray, bfArrPos));
+						printf("%c", (int) atVector(bfArray, bfArrPos));
 					else
-						printf("%d\n", atVector(bfArray, bfArrPos));
+						printf("%d\n", (int) atVector(bfArray, bfArrPos));
 					break;
 
 				case ',':
-					assignVector(bfArray, bfArrPos, getchar());
+					assignVector(bfArray, bfArrPos, (void*) getchar());
 					break;
 
 				case '[':
-					pushBackVector(bfLoop, ftell(f));
+					pushBackVector(bfLoop, (void*) ftell(f));
 					bfLpPos++;
 					break;
 
@@ -130,7 +120,7 @@ int main(int argc, char **argv)
 					{	
 						popBackVector(bfLoop);
 					}else{
-						fseek(f, backVector(bfLoop), SEEK_SET);
+						fseek(f, (long int) backVector(bfLoop), SEEK_SET);
 					}
 					break;
 
@@ -168,12 +158,20 @@ int main(int argc, char **argv)
 					free(temp);
 					break;
 					}
+				case '^':
+					bfArrPos = 0;
+					break;
+				case '#':
+					printf("%d", atVector(bfArray, bfArrPos));
+					break;
+
 			}
 		}
 	}
 
 	freeVector(bfArray);
 	freeVector(bfLoop);
+	freeVector(ScratchArr);
 	printf("\n");
 	/* Close Files */
 	fclose(f);

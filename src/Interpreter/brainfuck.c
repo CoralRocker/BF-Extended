@@ -13,6 +13,19 @@ typedef struct scratchpad {
 	uint64_t prevArrSize, prevArrPos, prevLoopPos;
 } scratchpad;
 
+void openScratchPad();
+
+void closeScratchPad();
+
+/* Pointer */
+vector *bfArray;// = initVector();
+uint64_t bfArrSize = 1, bfArrPos = 0;
+
+vector *bfLoop;// = initVector();
+uint64_t bfLpPos = 0;
+
+vector *ScratchArr;// = initVector();
+
 int main(int argc, char **argv)
 {
 
@@ -24,19 +37,19 @@ int main(int argc, char **argv)
 	}
 
 
-	/* Pointer */
-	vector *bfArray = initVector();
+	bfArray = initVector();
 	pushBackVector(bfArray, 0);
-	uint64_t bfArrSize = 1, bfArrPos = 0;
 
-	vector *bfLoop = initVector();
-	uint64_t bfLpPos = 0;
-
-	vector *ScratchArr = initVector();
+	bfLoop = initVector();
+	
+	ScratchArr = initVector();
 
 	/* Files */
-	FILE *f = fopen(((argc>1)?argv[1]:fname), "r");
+	vector *fileArray = initVector();
+	pushBackVector(fileArray, fopen(((argc>1)?argv[1]:fname), "r"));
 	
+	FILE *f = backVector(fileArray);
+
 	bool debug = (argc > 2) ? (argv[2][0] == 'd') : false;
 	
 	/* Compile Loop */
@@ -126,36 +139,12 @@ int main(int argc, char **argv)
 
 				case '{':
 					{
-					scratchpad *temp = malloc(sizeof(scratchpad));
-					temp->arrPtr = initVector();
-					temp->loopPtr = initVector();
-					temp->prevArr = bfArray;
-					temp->prevLoop = bfLoop;
-					temp->prevArrSize = bfArrSize;
-					temp->prevArrPos = bfArrPos;
-					temp->prevLoopPos = bfLpPos;
-					
-					bfArray = temp->arrPtr;
-					bfLoop = temp->loopPtr;
-					bfArrSize = 1;
-					bfArrPos = 0;
-					bfLpPos = 0;
-					pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
-					pushBackVector(ScratchArr, temp);
+					openScratchPad();
 					break;
 					}
 				case '}':
 					{
-					scratchpad *temp = popBackVector(ScratchArr);
-					bfArray = temp->prevArr;
-					bfLoop = temp->prevLoop;
-					assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
-					freeVector(temp->arrPtr);
-					freeVector(temp->loopPtr);
-					bfArrSize = temp->prevArrSize;
-					bfArrPos = temp->prevArrPos;
-					bfLpPos = temp->prevLoopPos;
-					free(temp);
+					closeScratchPad();
 					break;
 					}
 				case '^':
@@ -164,7 +153,29 @@ int main(int argc, char **argv)
 				case '#':
 					printf("%d", atVector(bfArray, bfArrPos));
 					break;
-
+				case '@':
+					{	
+						char* tempBuf;
+						size_t* tempLen;
+						FILE* tempStream;
+						tempStream = open_memstream(&tempBuf, &tempLen);
+						while((c = fgetc(f))!= '@' && c != EOF){
+							fputc(c, tempStream);
+						}
+						fclose(tempStream);
+						//puts(tempBuf);
+						pushBackVector(fileArray, fopen(tempBuf, "r"));
+						f = backVector(fileArray);
+						openScratchPad();
+					break;
+					}
+				case '!':
+					{
+						closeScratchPad();
+						popBackVector(fileArray);
+						f = backVector(fileArray);
+					break;
+					}
 			}
 		}
 	}
@@ -175,4 +186,36 @@ int main(int argc, char **argv)
 	printf("\n");
 	/* Close Files */
 	fclose(f);
-}	
+}
+
+void openScratchPad(){
+	scratchpad *temp = malloc(sizeof(scratchpad));
+	temp->arrPtr = initVector();
+	temp->loopPtr = initVector();
+	temp->prevArr = bfArray;
+	temp->prevLoop = bfLoop;
+	temp->prevArrSize = bfArrSize;
+	temp->prevArrPos = bfArrPos;
+	temp->prevLoopPos = bfLpPos;
+	
+	bfArray = temp->arrPtr;
+	bfLoop = temp->loopPtr;
+	bfArrSize = 1;
+	bfArrPos = 0;
+	bfLpPos = 0;
+	pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
+	pushBackVector(ScratchArr, temp);
+}
+
+void closeScratchPad(){	
+	scratchpad *temp = popBackVector(ScratchArr);
+	bfArray = temp->prevArr;
+	bfLoop = temp->prevLoop;
+	assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
+	freeVector(temp->arrPtr);
+	freeVector(temp->loopPtr);
+	bfArrSize = temp->prevArrSize;
+	bfArrPos = temp->prevArrPos;
+	bfLpPos = temp->prevLoopPos;
+	free(temp);
+}

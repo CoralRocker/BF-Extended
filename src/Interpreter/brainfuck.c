@@ -190,6 +190,7 @@ int main(int argc, char **argv)
 
 void openScratchPad(){
 	scratchpad *temp = malloc(sizeof(scratchpad));
+	int numItems = atVector(bfArray, bfArrPos);
 	temp->arrPtr = initVector();
 	temp->loopPtr = initVector();
 	temp->prevArr = bfArray;
@@ -203,15 +204,18 @@ void openScratchPad(){
 	bfArrSize = 1;
 	bfArrPos = 0;
 	bfLpPos = 0;
-	pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
+	for(int i = 1; i <= numItems; i++)
+		pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos+i));
 	pushBackVector(ScratchArr, temp);
 }
 
 void closeScratchPad(){	
 	scratchpad *temp = popBackVector(ScratchArr);
+	int numItems = atVector(bfArray, bfArrPos);
 	bfArray = temp->prevArr;
 	bfLoop = temp->prevLoop;
-	assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
+	for(int i = 0; i < numItems; i++)
+		assignVector(bfArray, temp->prevArrPos+i+1, atVector(temp->arrPtr, bfArrPos+i));
 	freeVector(temp->arrPtr);
 	freeVector(temp->loopPtr);
 	bfArrSize = temp->prevArrSize;

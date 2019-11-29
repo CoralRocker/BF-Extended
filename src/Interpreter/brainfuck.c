@@ -17,6 +17,10 @@ void openScratchPad();
 
 void closeScratchPad();
 
+void openInclude();
+
+void closeInclude();
+
 /* Pointer */
 vector *bfArray;// = initVector();
 uint64_t bfArrSize = 1, bfArrPos = 0;
@@ -156,7 +160,7 @@ int main(int argc, char **argv)
 				case '@':
 					{	
 						char* tempBuf;
-						size_t* tempLen;
+						size_t tempLen;
 						FILE* tempStream;
 						tempStream = open_memstream(&tempBuf, &tempLen);
 						while((c = fgetc(f))!= '@' && c != EOF){
@@ -166,12 +170,13 @@ int main(int argc, char **argv)
 						//puts(tempBuf);
 						pushBackVector(fileArray, fopen(tempBuf, "r"));
 						f = backVector(fileArray);
-						openScratchPad();
+						openInclude();
+						free(tempBuf);
 					break;
 					}
 				case '!':
 					{
-						closeScratchPad();
+						closeInclude();
 						popBackVector(fileArray);
 						f = backVector(fileArray);
 					break;
@@ -189,6 +194,37 @@ int main(int argc, char **argv)
 }
 
 void openScratchPad(){
+	scratchpad *temp = malloc(sizeof(scratchpad));
+	temp->arrPtr = initVector();
+	temp->loopPtr = initVector();
+	temp->prevArr = bfArray;
+	temp->prevLoop = bfLoop;
+	temp->prevArrSize = bfArrSize;
+	temp->prevArrPos = bfArrPos;
+	temp->prevLoopPos = bfLpPos;
+	
+	bfArray = temp->arrPtr;
+	bfLoop = temp->loopPtr;
+	bfArrSize = 1;
+	bfArrPos = 0;
+	bfLpPos = 0;
+	pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
+	pushBackVector(ScratchArr, temp);
+}
+
+void closeScratchPad(){	
+	scratchpad *temp = popBackVector(ScratchArr);
+	bfArray = temp->prevArr;
+	bfLoop = temp->prevLoop;
+	assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
+	freeVector(temp->arrPtr);
+	freeVector(temp->loopPtr);
+	bfArrSize = temp->prevArrSize;
+	bfArrPos = temp->prevArrPos;
+	bfLpPos = temp->prevLoopPos;
+	free(temp);
+}
+void openInclude(){
 	scratchpad *temp = malloc(sizeof(scratchpad));
 	int numItems = atVector(bfArray, bfArrPos);
 	temp->arrPtr = initVector();
@@ -209,7 +245,7 @@ void openScratchPad(){
 	pushBackVector(ScratchArr, temp);
 }
 
-void closeScratchPad(){	
+void closeInclude(){	
 	scratchpad *temp = popBackVector(ScratchArr);
 	int numItems = atVector(bfArray, bfArrPos);
 	bfArray = temp->prevArr;

@@ -4,31 +4,7 @@
 #include <limits.h>
 #include <stdint.h>
 #include "Vector.h"
-
-typedef enum boolean {false, true} bool;
-
-typedef struct scratchpad {
-	vector *arrPtr, *loopPtr;
-	vector *prevArr, *prevLoop;
-	uint64_t prevArrSize, prevArrPos, prevLoopPos;
-} scratchpad;
-
-void openScratchPad();
-
-void closeScratchPad();
-
-void openInclude();
-
-void closeInclude();
-
-/* Pointer */
-vector *bfArray;// = initVector();
-uint64_t bfArrSize = 1, bfArrPos = 0;
-
-vector *bfLoop;// = initVector();
-uint64_t bfLpPos = 0;
-
-vector *ScratchArr;// = initVector();
+#include "brainfuck.h"
 
 int main(int argc, char **argv)
 {
@@ -195,74 +171,4 @@ int main(int argc, char **argv)
 	printf("\n");
 	/* Close Files */
 	fclose(f);
-}
-
-void openScratchPad(){
-	scratchpad *temp = malloc(sizeof(scratchpad));
-	temp->arrPtr = initVector();
-	temp->loopPtr = initVector();
-	temp->prevArr = bfArray;
-	temp->prevLoop = bfLoop;
-	temp->prevArrSize = bfArrSize;
-	temp->prevArrPos = bfArrPos;
-	temp->prevLoopPos = bfLpPos;
-	
-	bfArray = temp->arrPtr;
-	bfLoop = temp->loopPtr;
-	bfArrSize = 1;
-	bfArrPos = 0;
-	bfLpPos = 0;
-	pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
-	pushBackVector(ScratchArr, temp);
-}
-
-void closeScratchPad(){	
-	scratchpad *temp = popBackVector(ScratchArr);
-	bfArray = temp->prevArr;
-	bfLoop = temp->prevLoop;
-	assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
-	freeVector(temp->arrPtr);
-	freeVector(temp->loopPtr);
-	bfArrSize = temp->prevArrSize;
-	bfArrPos = temp->prevArrPos;
-	bfLpPos = temp->prevLoopPos;
-	free(temp);
-}
-void openInclude(){
-	scratchpad *temp = malloc(sizeof(scratchpad));
-	int numItems = atVector(bfArray, bfArrPos);
-	temp->arrPtr = initVector();
-	temp->loopPtr = initVector();
-	temp->prevArr = bfArray;
-	temp->prevLoop = bfLoop;
-	temp->prevArrSize = bfArrSize;
-	temp->prevArrPos = bfArrPos;
-	temp->prevLoopPos = bfLpPos;
-	
-	bfArray = temp->arrPtr;
-	bfLoop = temp->loopPtr;
-	bfArrSize = 1;
-	bfArrPos = 0;
-	bfLpPos = 0;
-	for(int i = 1; i <= numItems; i++)
-		pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos+i));
-	if(numItems == 0)
-		pushBackVector(bfArray, 0);
-	bfArrSize = bfArray->size; 
-	pushBackVector(ScratchArr, temp);
-}
-
-void closeInclude(){	
-	scratchpad *temp = popBackVector(ScratchArr);
-	int numItems = atVector(bfArray, bfArrPos);
-	bfArray = temp->prevArr;
-	bfLoop = temp->prevLoop;
-	for(int i = 0; i < numItems; i++)
-		assignVector(bfArray, temp->prevArrPos+i+1, atVector(temp->arrPtr, bfArrPos+i));
-	freeVector(temp->arrPtr);
-	freeVector(temp->loopPtr);
-	bfArrSize = temp->prevArrSize;
-	bfArrPos = temp->prevArrPos;
-	bfLpPos = temp->prevLoopPos;
-	free(temp);
 }

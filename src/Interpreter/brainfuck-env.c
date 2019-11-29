@@ -4,58 +4,30 @@
 #include <signal.h>
 #include <stdint.h>
 #include "Vector.h"
+#include "brainfuck.h"
 
 const float BFE_ENV_VERSION = 1.0;
-
-const char* KRED = "\033[31m";
-const char* KBLK = "\033[30m";
-const char* KGRN = "\033[32m";
-const char* KYLW = "\033[33m";
-const char* KBLU = "\033[34m";
-const char* KMGA = "\033[35m";
-const char* KCYN = "\033[36m";
-const char* KWHT = "\033[37m";
-
-const char* BRED = "\033[41m";
-const char* BBLK = "\033[40m";
-const char* BGRN = "\033[42m";
-const char* BYLW = "\033[43m";
-const char* BBLU = "\033[44m";
-const char* BMGA = "\033[45m";
-const char* BCYN = "\033[46m";
-const char* BWHT = "\033[47m";
-
-const char* KNRM = "\033[0m";
-
-typedef enum boolean {false, true} bool;
-
-typedef struct scratchpad {
-	vector *arrPtr, *loopPtr;
-	vector *prevArr, *prevLoop;
-	uint64_t prevArrSize, prevArrPos, prevLoopPos;
-} scratchpad;
 
 static void catch_sigint(int signo){
 //	printf("\n%s%s CAUGHT EITHER SIGTERM OR SIGINT --BRAINFUCK-ENV %3f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);	
 }
+
 
 int main(int argc, char **argv)
 {
 	signal(SIGINT, catch_sigint);
 	signal(SIGTERM, catch_sigint);
 	/* Pointer */
-	vector *bfArray = initVector();
+	bfArray = initVector();
 	pushBackVector(bfArray, 0);
-	uint64_t bfArrSize = 1, bfArrPos = 0;
-
-	vector *bfLoop = initVector();
-	uint64_t bfLpPos = 0;
-
-	vector *ScratchArr = initVector();
+	bfLoop = initVector();
+	ScratchArr = initVector();
 
 	/* Files */
 	FILE *f = fopen(".BFE-ENV", "w+");
-	
+	vector* fileArray = initVector();
+	pushBackVector(fileArray, f);
+
 	bool debug = false;
 	
 	/* Compile Loop */
@@ -81,8 +53,6 @@ int main(int argc, char **argv)
 				case 'Q':
 					breakout = true;
 					break;
-				case '?':
-					printf("Brainfuck Usage\n");
 			}
 			if(!breakout){
 				switch(c)
@@ -144,41 +114,47 @@ int main(int argc, char **argv)
 	
 					case '{':
 						{
-						scratchpad *temp = malloc(sizeof(scratchpad));
-						temp->arrPtr = initVector();
-						temp->loopPtr = initVector();
-						temp->prevArr = bfArray;
-						temp->prevLoop = bfLoop;
-						temp->prevArrSize = bfArrSize;
-						temp->prevArrPos = bfArrPos;
-						temp->prevLoopPos = bfLpPos;
-						
-						bfArray = temp->arrPtr;
-						bfLoop = temp->loopPtr;
-						bfArrSize = 1;
-						bfArrPos = 0;
-						bfLpPos = 0;
-						pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos));
-						pushBackVector(ScratchArr, temp);
-						break;
+							openScratchPad();
+							break;
 						}
 					case '}':
 						{
-						scratchpad *temp = popBackVector(ScratchArr);
-						bfArray = temp->prevArr;
-						bfLoop = temp->prevLoop;
-						assignVector(bfArray, temp->prevArrPos, atVector(temp->arrPtr, bfArrPos));
-						freeVector(temp->arrPtr);
-						freeVector(temp->loopPtr);
-						bfArrSize = temp->prevArrSize;
-						bfArrPos = temp->prevArrPos;
-						bfLpPos = temp->prevLoopPos;
-						free(temp);
-						break;
+							closeScratchPad();
+							break;
 						}
 					case '^':
 						bfArrPos = 0;
 						break;
+					case '#':
+						printf("%d", atVector(bfArray, bfArrPos));
+						break;
+					case '@':
+						{	
+							char* tempBuf;
+							size_t tempLen;
+							FILE* tempStream;
+							tempStream = open_memstream(&tempBuf, &tempLen);
+							while((c = fgetc(f))!= '@' && c != EOF){
+								fputc(c, tempStream);
+							}
+							fclose(tempStream);
+							//puts(tempBuf);
+							pushBackVector(fileArray, fopen(tempBuf, "r"));
+							f = backVector(fileArray);
+							if(f==NULL)
+								puts("!!! FILE NAME INVALID !!!");
+							openInclude();
+							//openScratchPad();
+							free(tempBuf);
+						break;
+						}
+					case '!':
+						{
+							closeInclude();
+							fclose(popBackVector(fileArray));
+							f = backVector(fileArray);
+						break;
+						}
 				}
 			}
 		}
@@ -191,6 +167,7 @@ int main(int argc, char **argv)
 	freeVector(bfArray);
 	freeVector(bfLoop);
 	freeVector(ScratchArr);
+	freeVector(fileArray);
 	printf("\n");
 	/* Close Files */
 	fclose(f);

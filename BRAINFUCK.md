@@ -94,5 +94,8 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 <p>&nbsp;&nbsp;&nbsp;&nbsp;The <i>#</i> command prints the number in the current cell instead of interpreting it as an ASCII code.</p>
 
 ---
+## File Including
+### Description
+&nbsp;&nbsp;&nbsp;&nbsp;The _@_ and _!_ operators can be used to open a brainfuck file and run it, and to close said file, respectively. The called file is run isolated from the rest of the program's memory. This feature is not completely implemented yet. So far, files called will act as if they were run on scratch pads, following the same rules. There is a plan to allow multiple parameters to be passed and returned from both scratchpads and included files. 
 
 # [RETURN TO README](README.md)

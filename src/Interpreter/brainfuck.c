@@ -170,14 +170,17 @@ int main(int argc, char **argv)
 						//puts(tempBuf);
 						pushBackVector(fileArray, fopen(tempBuf, "r"));
 						f = backVector(fileArray);
+						if(f==NULL)
+							puts("!!! FILE NAME INVALID !!!");
 						openInclude();
+						//openScratchPad();
 						free(tempBuf);
 					break;
 					}
 				case '!':
 					{
 						closeInclude();
-						popBackVector(fileArray);
+						fclose(popBackVector(fileArray));
 						f = backVector(fileArray);
 					break;
 					}
@@ -188,6 +191,7 @@ int main(int argc, char **argv)
 	freeVector(bfArray);
 	freeVector(bfLoop);
 	freeVector(ScratchArr);
+	freeVector(fileArray);
 	printf("\n");
 	/* Close Files */
 	fclose(f);
@@ -242,6 +246,9 @@ void openInclude(){
 	bfLpPos = 0;
 	for(int i = 1; i <= numItems; i++)
 		pushBackVector(bfArray, atVector(temp->prevArr, temp->prevArrPos+i));
+	if(numItems == 0)
+		pushBackVector(bfArray, 0);
+	bfArrSize = bfArray->size; 
 	pushBackVector(ScratchArr, temp);
 }
 

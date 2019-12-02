@@ -84,14 +84,35 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 &nbsp;&nbsp;&nbsp;&nbsp;C-Style comment blocks can be opened using _/*_ and closed using _*/_. Comments opened using _//_ and only lasting one line do not exist. 
 
 ---
-## Return-to-0 <br>
+## Return-to-0, Go-to-End, and Trim<br>
 ### Description
-&nbsp;&nbsp;&nbsp;&nbsp;With the _^_ command, the instruction pointer is returned to the start of the program. 
+&nbsp;&nbsp;&nbsp;&nbsp;With the _^_ command, the instruction pointer is returned to the start of the program. With the _~_ command, the instruction pointer is sent to the last cell that has been used in the program, even if it is zero. The trim   
+
+### Example
+```
+++++++
+[
+	>>>>++++ ++++ /* add 8 to some far off cell... */
+	^ /* Return to the first cell... */
+	- /* Subtract 1 */
+]
+>>>>
+
+``
 
 ---
 ## Print Number
 ### Description
 <p>&nbsp;&nbsp;&nbsp;&nbsp;The <i>#</i> command prints the number in the current cell instead of interpreting it as an ASCII code.</p>
+
+### Example
+```
+/* This prints the number 0 */
+++++++[>++++++++<-]>.[-]<[-]
+
+/* This also prints the number 0... */
+[-]#
+```
 
 ---
 ## File Including

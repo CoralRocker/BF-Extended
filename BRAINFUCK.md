@@ -96,6 +96,28 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ---
 ## File Including
 ### Description
-&nbsp;&nbsp;&nbsp;&nbsp;The _@_ and _!_ operators can be used to open a brainfuck file and run it, and to close said file, respectively. The called file is run isolated from the rest of the program's memory. This feature is not completely implemented yet. So far, files called will act as if they were run on scratch pads, following the same rules. There is a plan to allow multiple parameters to be passed and returned from both scratchpads and included files. 
+&nbsp;&nbsp;&nbsp;&nbsp;The _@_ and _!_ operators can be used to open a brainfuck file and run it, and to close said file, respectively. The called file is run isolated from the rest of the program's memory. When calling the file, the cell in which it was called indicates the number of parameters to pass to the included file. Parameters are read starting from the cell after the file was called. Likewise, when exiting an include with _!_, the number of arguments to return is stored in the current cell, and the arguments themselves are in the proceeding cells. Multiple files can be included recursively. In this manner, it is possible to find yourself in an infinite loop, so don't. The path for the file to include must be relative to the executable, but I am working on making it relative to the file it was called from. 
 
+### Example
+**EX.b**
+```
+[-] /* No arguments passed to file */
+@Example-Include.b@ /* Call File */
+[>+++ +++<-]
+```
+
+**Example-Include.b**
+```
+/* Print the character 0 */
++++ +++
+[>++++ ++++<-]
+>[<+>-]<
+.
+[-]
++ /* return 1 parameter */
+>++++ ++++< /* Param 1 = 8 */
+! /* Return to calling file */
+```
+
+---
 # [RETURN TO README](README.md)

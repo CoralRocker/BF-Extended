@@ -7,7 +7,7 @@ COMPLETE EXPECTED OUTPUT:
 -------------------------
 
 Loops Work?
-++++++++++++++++++++++++++++++++++++++++++++++++.[->+<]>.[-]++++++++++.[-]<
+.[->+<]>.[-]++++++++++.[-]<
 Expected output: 00
 Wrong output: 0
 	      6?
@@ -23,4 +23,5 @@ Expected output: 0
 Wrong output: a comma 
 
 Exit out of here
+++>+>++<<
 !

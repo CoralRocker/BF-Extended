@@ -95,7 +95,7 @@ void closeInclude(){
 	bfArray = temp->prevArr;
 	bfLoop = temp->prevLoop;
 	for(int i = 0; i < numItems; i++)
-		assignVector(bfArray, temp->prevArrPos+i, atVector(temp->arrPtr, bfArrPos+i));
+		assignVector(bfArray, temp->prevArrPos+i, atVector(temp->arrPtr, bfArrPos+i+1));
 	freeVector(temp->arrPtr);
 	freeVector(temp->loopPtr);
 	bfArrSize = temp->prevArrSize;

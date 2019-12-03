@@ -191,7 +191,7 @@ int main(int argc, char **argv)
 					bfArrPos = 0;
 					break;
 				case 'd':
-					printf("Current Cell: %X\nCurrent Size: %X\n", bfArrPos, bfArrSize);
+					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
 					break;
 			}
 		}

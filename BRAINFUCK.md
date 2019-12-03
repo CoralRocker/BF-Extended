@@ -16,6 +16,13 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |.|Print ASCII value of cell|
 |,|Get single character from STDIN|
 
+### Added Features
+
+|Operand|Action|
+|:-:|:-|
+|{|[Open Scratch Memory](#
+|}|
+
 ---
 ### Example Program
 

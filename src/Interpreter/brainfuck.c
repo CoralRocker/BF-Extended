@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 				case '@':
 					{	
 						char* tempBuf;
-						ssize_t tempLen;
+						size_t tempLen;
 						FILE* tempStream;
 						tempStream = open_memstream(&tempBuf, &tempLen);
 						while((c = fgetc(f))!= '@' && c != EOF){
@@ -164,12 +164,16 @@ int main(int argc, char **argv)
 					{
 					int option = atVector(bfArray, bfArrPos);
 					if(option == 0){
-						int lastPos;
-						for(int i = 0; i < bfArrSize; i++)
-							if(atVector(bfArray, bfArrPos) != 0)
-								lastPos = i;
-						for(int i = 0; i < (bfArrSize - lastPos - 1); i++)
-							popBackVector(bfArray);
+						int pos = bfArrSize - 1;
+						while(pos != 0){
+							int val = atVector(bfArray, pos);
+							if(val == 0)
+								popBackVector(bfArray);
+							else if(val != 0)
+								break;
+							pos--;
+						}
+						bfArrSize = bfArray->size;
 					}else{
 						int pos = 0;
 						while(pos < bfArrSize){
@@ -185,6 +189,9 @@ int main(int argc, char **argv)
 					}
 				case '^':
 					bfArrPos = 0;
+					break;
+				case 'd':
+					printf("Current Cell: %X\nCurrent Size: %X\n", bfArrPos, bfArrSize);
 					break;
 			}
 		}

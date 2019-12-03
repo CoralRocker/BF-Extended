@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 				case '@':
 					{	
 						char* tempBuf;
-						size_t tempLen;
+						ssize_t tempLen;
 						FILE* tempStream;
 						tempStream = open_memstream(&tempBuf, &tempLen);
 						while((c = fgetc(f))!= '@' && c != EOF){
@@ -161,6 +161,7 @@ int main(int argc, char **argv)
 					bfArrPos = bfArrSize - 1;
 					break;
 				case '|':
+					{
 					int option = atVector(bfArray, bfArrPos);
 					if(option == 0){
 						int lastPos;
@@ -181,6 +182,7 @@ int main(int argc, char **argv)
 					}
 					bfArrSize = bfArray->size;
 					break;
+					}
 				case '^':
 					bfArrPos = 0;
 					break;

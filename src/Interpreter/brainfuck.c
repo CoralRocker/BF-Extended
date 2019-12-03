@@ -160,6 +160,31 @@ int main(int argc, char **argv)
 						f = backVector(fileArray);
 					break;
 					}
+				case '~':
+					bfArrPos = bfArrSize - 1;
+					break;
+				case '|':
+					int option = atVector(bfArray, bfArrPos);
+					if(option == 0){
+						int lastPos;
+						for(int i = 0; i < bfArrSize; i++)
+							if(atVector(bfArray, bfArrPos) != 0)
+								lastPos = i;
+						for(int i = 0; i < (bfArrSize - lastPos - 1); i++)
+							popBackVector(bfArray);
+					}else{
+						int pos = 0;
+						while(pos < bfArrSize){
+							if(atVector(bfArray, pos)==option)
+								eraseVector(bfArray, pos);
+							else
+								pos++;
+							bfArrSize = bfArray->size;
+						}
+					}
+					bfArrSize = bfArray->size;
+					break;
+
 			}
 		}
 	}

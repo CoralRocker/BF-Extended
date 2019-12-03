@@ -98,7 +98,7 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ]
 >>>>
 
-``
+```
 
 ---
 ## Print Number

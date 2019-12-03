@@ -127,9 +127,6 @@ int main(int argc, char **argv)
 					closeScratchPad();
 					break;
 					}
-				case '^':
-					bfArrPos = 0;
-					break;
 				case '#':
 					printf("%d", atVector(bfArray, bfArrPos));
 					break;
@@ -184,7 +181,9 @@ int main(int argc, char **argv)
 					}
 					bfArrSize = bfArray->size;
 					break;
-
+				case '^':
+					bfArrPos = 0;
+					break;
 			}
 		}
 	}

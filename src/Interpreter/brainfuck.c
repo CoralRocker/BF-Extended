@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 		fname[strlen(fname)-1] = 0x00;
 	}
 
-
 	bfArray = initVector();
 	pushBackVector(bfArray, 0);
 
@@ -104,8 +103,12 @@ int main(int argc, char **argv)
 					break;
 
 				case '[':
-					pushBackVector(bfLoop, (void*) ftell(f));
-					bfLpPos++;
+					if(atVector(bfArray, bfArrPos)!=0){
+						pushBackVector(bfLoop, (void*) ftell(f));
+						bfLpPos++;
+					}else{
+						while((c = fgetc(f))!=']');
+					}
 					break;
 
 				case ']':
@@ -162,30 +165,8 @@ int main(int argc, char **argv)
 					break;
 				case '|':
 					{
-					int option = atVector(bfArray, bfArrPos);
-					if(option == 0){
-						int pos = bfArrSize - 1;
-						while(pos != 0){
-							int val = atVector(bfArray, pos);
-							if(val == 0)
-								popBackVector(bfArray);
-							else if(val != 0)
-								break;
-							pos--;
-						}
-						bfArrSize = bfArray->size;
-					}else{
-						int pos = 0;
-						while(pos < bfArrSize){
-							if(atVector(bfArray, pos)==option)
-								eraseVector(bfArray, pos);
-							else
-								pos++;
-							bfArrSize = bfArray->size;
-						}
-					}
-					bfArrSize = bfArray->size;
-					break;
+					trimMemory();
+						break;
 					}
 				case '^':
 					bfArrPos = 0;

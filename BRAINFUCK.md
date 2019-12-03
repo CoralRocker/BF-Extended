@@ -86,7 +86,7 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ---
 ## Return-to-0, Go-to-End, and Trim<br>
 ### Description
-&nbsp;&nbsp;&nbsp;&nbsp;With the _^_ command, the instruction pointer is returned to the start of the program. With the _~_ command, the instruction pointer is sent to the last cell that has been used in the program, even if it is zero. The trim   
+&nbsp;&nbsp;&nbsp;&nbsp;With the _^_ command, the instruction pointer is returned to the start of the program. With the _~_ command, the instruction pointer is sent to the last cell that has been used in the program, even if it is zero. The trim command can be called using the _|_ operator. It frees all cells which contain the value passed to it, or all that are set to zero past the last non-zero cell. 
 
 ### Example
 ```

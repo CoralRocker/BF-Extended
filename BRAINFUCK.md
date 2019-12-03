@@ -20,8 +20,16 @@ An extended version of the Brainf**k language that adds a small amount of added 
 
 |Operand|Action|
 |:-:|:-|
-|{|[Open Scratch Memory](#
-|}|
+|{|[Open Scratch Memory](#scratch-memory)
+|}|[Close Scratch Memory](#scratch-memory)
+|@|[Call File](#file-including)
+|!|[Return From File](#file-including)
+|#|[Print Number](#print-number)
+|^|[Return to start](#instruction-pointer-manipulation)
+|~|[Go to end](#instruction-pointer-manipulation)
+|\||[Trim program](#instruction-pointer-manipulation)
+|\\*|[Open Comment](#comments)
+\*\\ |[Close Comment](#comments)
 
 ---
 ### Example Program
@@ -91,7 +99,7 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 &nbsp;&nbsp;&nbsp;&nbsp;C-Style comment blocks can be opened using _/*_ and closed using _*/_. Comments opened using _//_ and only lasting one line do not exist. 
 
 ---
-## Return-to-0, Go-to-End, and Trim<br>
+## Instruction Pointer Manipulation<br>
 ### Description
 &nbsp;&nbsp;&nbsp;&nbsp;With the _^_ command, the instruction pointer is returned to the start of the program. With the _~_ command, the instruction pointer is sent to the last cell that has been used in the program, even if it is zero. The trim command can be called using the _|_ operator. It frees all cells which contain the value passed to it, or all that are set to zero past the last non-zero cell. 
 
@@ -111,7 +119,7 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ## Print Number
 ### Description
 <p>&nbsp;&nbsp;&nbsp;&nbsp;The <i>#</i> command prints the number in the current cell instead of interpreting it as an ASCII code.</p>
-
+ed
 ### Example
 ```
 /* This prints the number 0 */

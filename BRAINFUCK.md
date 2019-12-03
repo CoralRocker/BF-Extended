@@ -28,8 +28,8 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |^|[Return to start](#instruction-pointer-manipulation)
 |~|[Go to end](#instruction-pointer-manipulation)
 |\||[Trim program](#instruction-pointer-manipulation)
-|\\*|[Open Comment](#comments)
-\*\\ |[Close Comment](#comments)
+|\\*|[Open Comment](#Comments)
+\*\\ |[Close Comment](#Comments)
 
 ---
 ### Example Program
@@ -63,35 +63,6 @@ Line 5: Prints the content of the cell. Our cell holds the value *48*, so it wil
 ### Description
 &nbsp;&nbsp;&nbsp;&nbsp;Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended. <br>
 &nbsp;&nbsp;&nbsp;&nbsp;An unlimited number of scratch memory can be open at once, meaning that you can open scratch memory inside of scratch memory and have no issues. Only one parameter can be passed to the memory, however. I may or may not work on adding multiple parameters, as it would not be hard. Only the brainfuck.v.c interpreter has unlimited scratch memory as I have decided to deprecate the brainfuck.c interpreter. 
-### Example Program
-**[ExamplePrograms/Scratch.b](ExamplePrograms/Scratch.b)**
-```
-[-]>[-]>[-]<
-+++ > ++ <
-{
-	[->+++<]
-	>
-}
-<+++ +++ 
-[> ++++ ++++ > ++++ ++++ <<-]
->.[-]++++++++++.>.
-```
-**Expected Output**
-```
-9
-2
-```
-
-### Line-By-Line Explanation<br>
-**Line 1:** Clears cells 1 and 2 in the program.<br>
-**Line 2:** Sets cell 1 to 3 and cell 2 to 2.<br>
-**Line 3:** Opens the scratch memory on cell 1.<br>
-**Line 4:** The value of cell 1 in the parent program is 3. Thus, the value of cell 0 in the scratch memory is also 3. Multiplies cell 0 by 3 and places the output in cell 1.<br>
-**Line 5:** Moves pointer to cell 1.<br>
-**Line 6:** Exits scratch memory. This returns the value of 9 to cell 1, because the value of the cell in which we exited was 9.<br>
-**Line 7:** Sets cell 0 to 6<br>
-**Line 8:** adds 48 (ASCII `0`) to cell 1 and 2.<br>
-**Line 9:** Prints the value of cell 1, prints a newline, prints cell 2.
 
 ---
 ## Comments <br>

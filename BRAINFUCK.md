@@ -28,8 +28,8 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |^|[Return to start](#instruction-pointer-manipulation)
 |~|[Go to end](#instruction-pointer-manipulation)
 |\||[Trim program](#instruction-pointer-manipulation)
-|\\*|[Open Comment](#Comments)
-\*\\ |[Close Comment](#Comments)
+|\\*|[Open Comment](#comments-)
+\*\\ |[Close Comment](#comments-)
 
 ---
 ### Example Program

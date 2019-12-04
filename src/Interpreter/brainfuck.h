@@ -103,3 +103,29 @@ void closeInclude(){
 	bfLpPos = temp->prevLoopPos;
 	free(temp);
 }
+
+void trimMemory(){
+	int option = atVector(bfArray, bfArrPos);
+	if(option == 0){
+		int pos = bfArrSize - 1;
+		while(pos != 0){
+			int val = atVector(bfArray, pos);
+			if(val == 0)
+				popBackVector(bfArray);
+			else if(val != 0)
+				break;
+			pos--;
+		}
+		bfArrSize = bfArray->size;
+	}else{
+		int pos = 0;
+		while(pos < bfArrSize){
+			if(atVector(bfArray, pos)==option)
+				eraseVector(bfArray, pos);
+			else
+				pos++;
+			bfArrSize = bfArray->size;
+		}
+	}
+	bfArrSize = bfArray->size;
+}

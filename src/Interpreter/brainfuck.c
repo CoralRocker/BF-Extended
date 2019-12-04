@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 		fname[strlen(fname)-1] = 0x00;
 	}
 
-
 	bfArray = initVector();
 	pushBackVector(bfArray, 0);
 
@@ -104,8 +103,12 @@ int main(int argc, char **argv)
 					break;
 
 				case '[':
-					pushBackVector(bfLoop, (void*) ftell(f));
-					bfLpPos++;
+					if(atVector(bfArray, bfArrPos)!=0){
+						pushBackVector(bfLoop, (void*) ftell(f));
+						bfLpPos++;
+					}else{
+						while((c = fgetc(f))!=']');
+					}
 					break;
 
 				case ']':
@@ -127,9 +130,6 @@ int main(int argc, char **argv)
 					closeScratchPad();
 					break;
 					}
-				case '^':
-					bfArrPos = 0;
-					break;
 				case '#':
 					printf("%d", atVector(bfArray, bfArrPos));
 					break;
@@ -160,6 +160,20 @@ int main(int argc, char **argv)
 						f = backVector(fileArray);
 					break;
 					}
+				case '~':
+					bfArrPos = bfArrSize - 1;
+					break;
+				case '|':
+					{
+					trimMemory();
+						break;
+					}
+				case '^':
+					bfArrPos = 0;
+					break;
+				case 'd':
+					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
+					break;
 			}
 		}
 	}

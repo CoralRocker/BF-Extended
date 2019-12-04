@@ -53,14 +53,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 
 ### Example
 ```
-++++++
-[
-	>>>>++++ ++++ /* add 8 to some far off cell... */
-	^ /* Return to the first cell... */
-	- /* Subtract 1 */
-]
->>>>
-
+++++++>>>>>>>>>>>^[~++++++++^-]~[^+~-]^.>[-]|
 ```
 
 ---

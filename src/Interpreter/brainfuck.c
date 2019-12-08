@@ -146,6 +146,7 @@ int main(int argc, char **argv)
 						}
 						fclose(tempStream);
 						//puts(tempBuf);
+						//printf("TEMP: %s\nORIG: %s\n", tempBuf, backVector(fileNameArray));
 						pushBackVector(fileArray, relativeFilePointer(f, backVector(fileNameArray), tempBuf));
 						f = backVector(fileArray);
 						pushBackVector(fileNameArray, tempBuf);

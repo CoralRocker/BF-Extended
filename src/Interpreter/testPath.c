@@ -30,8 +30,11 @@ char* rootDir(FILE* f, char* strname){
 	dirname[n] = 0x0;
 	
 	int strLen = strlen(strname);
-	for(int i = n - strLen; i < n; i++)
+	for(int i = n-1; i >= n - strLen; i--){
+		if(dirname[i] == '/')
+			break;
 		dirname[i]=0x0;
+	}
 	printf("N: %d, STRLEN: %d\n", n, strlen(dirname));
 
 	return dirname;

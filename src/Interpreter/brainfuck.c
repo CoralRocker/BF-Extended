@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 		fname[strlen(fname)-1] = 0x00;
 	}
 
-
 	bfArray = initVector();
 	pushBackVector(bfArray, 0);
 
@@ -106,8 +105,12 @@ int main(int argc, char **argv)
 					break;
 
 				case '[':
-					pushBackVector(bfLoop, (void*) ftell(f));
-					bfLpPos++;
+					if(atVector(bfArray, bfArrPos)!=0){
+						pushBackVector(bfLoop, (void*) ftell(f));
+						bfLpPos++;
+					}else{
+						while((c = fgetc(f))!=']');
+					}
 					break;
 
 				case ']':
@@ -135,7 +138,7 @@ int main(int argc, char **argv)
 				case '@':
 					{	
 						char* tempBuf;
-						ssize_t tempLen;
+						size_t tempLen;
 						FILE* tempStream;
 						tempStream = open_memstream(&tempBuf, &tempLen);
 						while((c = fgetc(f))!= '@' && c != EOF){
@@ -166,29 +169,14 @@ int main(int argc, char **argv)
 					break;
 				case '|':
 					{
-					int option = atVector(bfArray, bfArrPos);
-					if(option == 0){
-						int lastPos;
-						for(int i = 0; i < bfArrSize; i++)
-							if(atVector(bfArray, bfArrPos) != 0)
-								lastPos = i;
-						for(int i = 0; i < (bfArrSize - lastPos - 1); i++)
-							popBackVector(bfArray);
-					}else{
-						int pos = 0;
-						while(pos < bfArrSize){
-							if(atVector(bfArray, pos)==option)
-								eraseVector(bfArray, pos);
-							else
-								pos++;
-							bfArrSize = bfArray->size;
-						}
-					}
-					bfArrSize = bfArray->size;
-					break;
+					trimMemory();
+						break;
 					}
 				case '^':
 					bfArrPos = 0;
+					break;
+				case 'd':
+					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
 					break;
 			}
 		}

@@ -27,6 +27,8 @@ int main(int argc, char **argv)
 	/* Files */
 	vector *fileArray = initVector();
 	pushBackVector(fileArray, fopen(((argc>1)?argv[1]:fname), "r"));
+	vector *fileNameArray = initVector();
+	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname));
 	
 	FILE *f = backVector(fileArray);
 
@@ -141,8 +143,9 @@ int main(int argc, char **argv)
 						}
 						fclose(tempStream);
 						//puts(tempBuf);
-						pushBackVector(fileArray, fopen(tempBuf, "r"));
+						pushBackVector(fileArray, relativeFilePointer(f, backVector(fileNameArray), tempBuf));
 						f = backVector(fileArray);
+						pushBackVector(fileNameArray, tempBuf);
 						if(f==NULL)
 							puts("!!! FILE NAME INVALID !!!");
 						openInclude();
@@ -154,6 +157,7 @@ int main(int argc, char **argv)
 					{
 						closeInclude();
 						fclose(popBackVector(fileArray));
+						popBackVector(fileNameArray);
 						f = backVector(fileArray);
 					break;
 					}

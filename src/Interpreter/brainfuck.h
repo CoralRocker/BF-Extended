@@ -108,7 +108,6 @@ void closeInclude(){
 	bfLpPos = temp->prevLoopPos;
 	free(temp);
 }
-<<<<<<< HEAD
 char* rootDir(FILE* f, char* strname){
 	int file_descriptor = fileno(f);
 	char* dirname = malloc(1024);
@@ -143,8 +142,7 @@ FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
 	free(rootdir);
 
 	return newFile;
-=======
-
+}
 void trimMemory(){
 	int option = atVector(bfArray, bfArrPos);
 	if(option == 0){
@@ -169,5 +167,5 @@ void trimMemory(){
 		}
 	}
 	bfArrSize = bfArray->size;
->>>>>>> e0a3a3cb39c16774a94a7f267aaccdbc74907be1
+
 }

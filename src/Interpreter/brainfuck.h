@@ -1,6 +1,11 @@
 #pragma once
 #include "Vector.h"
 #include <stdint.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 
 vector *bfArray, *bfLoop, *ScratchArr;
 uint64_t bfArrSize = 1, bfArrPos = 0, bfLpPos = 0;
@@ -103,7 +108,47 @@ void closeInclude(){
 	bfLpPos = temp->prevLoopPos;
 	free(temp);
 }
+char* rootDir(FILE* f, char* strname){
+	int file_descriptor = fileno(f);
+	char* dirname = malloc(1024);
+	char fdpath[1024];
+	ssize_t n;
+	sprintf(fdpath, "/proc/self/fd/%d", file_descriptor);
+	n = readlink(fdpath, dirname, 1024);
+	if(n < 0)
+		return NULL;
+	dirname[n] = 0x0;
+	
+	int strLen = strlen(strname);
+	for(int i = n - 1; i >= n - strLen; i--){
+		if(dirname[i] == '/')
+			break;
+		dirname[i]=0x0;
+	}
+//	printf("N: %d, STRLEN: %d\n", n, strlen(dirname));
 
+	return dirname;
+}
+
+FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
+	char* rootdir = rootDir(f, strname);
+	int rlen = strlen(rootdir);
+	int alen = strlen(relativePath);
+	//printf("RootDir: %s\n", rootdir);
+	for(int i = rlen; i < rlen+alen; i++)
+		rootdir[i] = relativePath[i-rlen];
+
+	rootdir[rlen+alen] = 0x00;
+	//printf("New dir: %s\n", rootdir);
+
+	FILE* newFile = fopen(rootdir, "r");
+	
+	if(!newFile)
+		perror("ERROR");
+	free(rootdir);
+
+	return newFile;
+}
 void trimMemory(){
 	int option = atVector(bfArray, bfArrPos);
 	if(option == 0){
@@ -128,4 +173,5 @@ void trimMemory(){
 		}
 	}
 	bfArrSize = bfArray->size;
+
 }

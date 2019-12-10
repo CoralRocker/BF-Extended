@@ -9,6 +9,7 @@
 int main(int argc, char **argv)
 {
 
+	/*Find file name to open*/
 	char fname[LINE_MAX];
 	if(argc < 2){
 		printf("No filename given. Please enter name of file to interpret: ");
@@ -16,29 +17,26 @@ int main(int argc, char **argv)
 		fname[strlen(fname)-1] = 0x00;
 	}
 
-	bfArray = initVector();
-	pushBackVector(bfArray, 0);
+	/* Initialize vectors and arrays */
+	bfArray = initVector();		//Main BF cell array
+	pushBackVector(bfArray, 0);	//Initialize first cell to 0
+	bfLoop = initVector();		//Loop array
+	ScratchArr = initVector();	//Scratch Memory Array
 
-	bfLoop = initVector();
-	
-	ScratchArr = initVector();
-
-	/* Files */
+	/* File and FileName Arrays */
 	vector *fileArray = initVector();
 	pushBackVector(fileArray, fopen(((argc>1)?argv[1]:fname), "r"));
 	vector *fileNameArray = initVector();
 	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname));
-	
 	FILE *f = backVector(fileArray);
 
-	bool debug = (argc > 2) ? (argv[2][0] == 'd') : false;
-	
-	/* Compile Loop */
-	char c;
-	bool comment = false;
+	char c; // Character
+	bool comment = false; //Check if code is commented out or not
+
+	/* Compile Loop */	
 	while((c = fgetc(f)) != EOF)
 	{
-		switch(c)
+		switch(c) // Check for Comments...
 		{
 			case '/':
 			{
@@ -61,10 +59,10 @@ int main(int argc, char **argv)
 				break;
 			}
 		}
-		if(!comment){
+		if(!comment){ //Interpret code if not commented out
 			switch(c)
 			{
-				case '>':
+				case '>': //Move cell forward
 					if(bfArrPos + 1 < bfArrSize)
 					{
 						bfArrPos++;
@@ -75,36 +73,33 @@ int main(int argc, char **argv)
 					}
 					break;
 
-				case '<':
+				case '<': //Move cell backward
 					if(bfArrPos != 0)
 					{
 						bfArrPos--;
 					}
 					break;
 
-				case '+':
+				case '+': //Increment cell
 					assignVector(bfArray, bfArrPos, atVector(bfArray, bfArrPos) + 1);
 					break;
 
-				case '-':
+				case '-': //Decrement cell
 					if(atVector(bfArray, bfArrPos) <= 0)
 						assignVector(bfArray, bfArrPos, 0);
 					else
 						assignVector(bfArray, bfArrPos, atVector(bfArray, bfArrPos) - 1);
 					break;
 
-				case '.':
-					if(!debug)
-						printf("%c", (int) atVector(bfArray, bfArrPos));
-					else
-						printf("%d\n", (int) atVector(bfArray, bfArrPos));
+				case '.': //Print cell
+					printf("%c", (int) atVector(bfArray, bfArrPos));
 					break;
 
-				case ',':
+				case ',': //Get input from keyboard
 					assignVector(bfArray, bfArrPos, (void*) getchar());
 					break;
 
-				case '[':
+				case '[': //Start loop
 					if(atVector(bfArray, bfArrPos)!=0){
 						pushBackVector(bfLoop, (void*) ftell(f));
 						bfLpPos++;
@@ -113,7 +108,7 @@ int main(int argc, char **argv)
 					}
 					break;
 
-				case ']':
+				case ']': //End loop
 					if(atVector(bfArray, bfArrPos) == 0)
 					{	
 						popBackVector(bfLoop);
@@ -122,7 +117,7 @@ int main(int argc, char **argv)
 					}
 					break;
 
-				case '{':
+				case '{': 
 					{
 					openScratchPad();
 					break;
@@ -135,8 +130,9 @@ int main(int argc, char **argv)
 				case '#':
 					printf("%d", atVector(bfArray, bfArrPos));
 					break;
-				case '@':
+				case '@': //Open include file
 					{	
+						/* Get File Name */
 						char* tempBuf;
 						size_t tempLen;
 						FILE* tempStream;
@@ -145,16 +141,19 @@ int main(int argc, char **argv)
 							fputc(c, tempStream);
 						}
 						fclose(tempStream);
-						//puts(tempBuf);
-						//printf("TEMP: %s\nORIG: %s\n", tempBuf, backVector(fileNameArray));
+						
+						/* Get relative file pointer of new file and save it */
 						pushBackVector(fileArray, relativeFilePointer(f, backVector(fileNameArray), tempBuf));
 						f = backVector(fileArray);
 						pushBackVector(fileNameArray, tempBuf);
+						
+						/* Check for error */
 						if(f==NULL)
-							puts("!!! FILE NAME INVALID !!!");
+							printf("ERROR: %s: Invalid File Name\n");
+						/* Open Include System */
 						openInclude();
-						//openScratchPad();
-						free(tempBuf);
+						/* Free Memory */
+						free(tempBuf); 
 					break;
 					}
 				case '!':

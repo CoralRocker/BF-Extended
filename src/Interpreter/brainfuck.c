@@ -156,37 +156,41 @@ int main(int argc, char **argv)
 						free(tempBuf); 
 					break;
 					}
-				case '!':
+				case '!': //Close include file
 					{
+						/* Close includes and files */
 						closeInclude();
 						fclose(popBackVector(fileArray));
 						popBackVector(fileNameArray);
 						f = backVector(fileArray);
 					break;
 					}
-				case '~':
+				case '~': //Go-To-End operator
 					bfArrPos = bfArrSize - 1;
 					break;
-				case '|':
+				case '|': //Trim Memory
 					{
-					trimMemory();
-						break;
+						trimMemory();
+					break;
 					}
-				case '^':
+				case '^': //Return-to-zero operator
 					bfArrPos = 0;
 					break;
-				case 'd':
+				case 'd': // Debug Information
 					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
 					break;
 			}
 		}
 	}
 
+	/* Free Vectors and Arrays */
 	freeVector(bfArray);
 	freeVector(bfLoop);
 	freeVector(ScratchArr);
 	freeVector(fileArray);
+	
 	printf("\n");
+	
 	/* Close Files */
 	fclose(f);
 }

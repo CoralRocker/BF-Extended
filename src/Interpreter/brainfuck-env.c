@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	size_t len = 0;
 	off_t pos;
-	bool breakout = false;
+	bool breakout = false, comment =false;
 	char* nLine;
 
 	printf("%s%sBRAINFUCK-ENV %.2f =>%s ", KRED, BYLW, BFE_ENV_VERSION, KNRM);
@@ -54,7 +54,28 @@ int main(int argc, char **argv)
 					breakout = true;
 					break;
 			}
-			if(!breakout){
+			switch(c)
+			{
+				case '/':
+					{
+						int here = ftell(f);
+						if(fgetc(f) == '*')
+							comment = true;
+						else
+							fseek(f, here, SEEK_SET);
+						break;
+					}
+				case '*':
+					{
+						int here = ftell(f);
+						if(fgetc(f) == '/')
+							comment = false;
+						else
+							fseek(f, here, SEEK_SET);
+						break;
+					}
+			}
+			if(!breakout && !comment){
 				switch(c)
 				{
 					case '>':

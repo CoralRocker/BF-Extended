@@ -39,6 +39,11 @@
 [-]>[-]<
 
 /* Call Breakpoints-Extended.include.b */
+<<<<<<< HEAD
 [-]+>++++++++++++++++++++++++++++++++++++++++++++++++<
 @ExamplePrograms/Breakpoints-Extended.include.b@
+=======
+[-]
+@Breakpoints-Extended.include.b@
+>>>>>>> Develop
 

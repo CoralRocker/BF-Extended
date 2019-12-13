@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	vector *fileNameArray = initVector();
 	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname));
 	FILE *f = backVector(fileArray);
-	pushBackVector(inputFileArr, stdin);
+	inputFileArr = initVector();
 
 	char c; // Character
 	bool comment = false; //Check if code is commented out or not
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 					break;
 
 				case ',': //Get input from keyboard
-					assignVector(bfArray, bfArrPos, (void*) getchar());
+					assignVector(bfArray, bfArrPos, (void*) fgetc((inputFileArr->size == 0)?stdin : backVector(inputFileArr)));
 					break;
 
 				case '[': //Start loop
@@ -181,12 +181,27 @@ int main(int argc, char **argv)
 					{
 						int numChars = atVector(bfArray, bfArrPos);
 						if(numChars != 0){
-							char* filename = malloc(numChars);
+							char* filename = malloc(numChars+1);
 							for(int i = 0; i < numChars; i++){
 								filename[i] = atVector(bfArray, bfArrPos+1+i);
 							}
+							filename[numChars]=0x00;
 							puts(filename);
+							FILE* newFile = fopen(filename, "r");
+							if(!newFile){								
+								freeVector(bfArray);
+								freeVector(bfLoop);
+								freeVector(ScratchArr);
+								freeVector(fileArray);
+								freeVector(inputFileArr);
+								printf("ERROR: %s is an invalid filename. Exiting program\n", filename);
+								free(filename);
+								return 0;
+							}
+							pushBackVector(inputFileArr, newFile);
 							free(filename);
+						}else{
+							popBackVector(inputFileArr);
 						}
 					break;
 					}
@@ -195,6 +210,7 @@ int main(int argc, char **argv)
 					break;
 			}
 		}
+
 	}
 
 	/* Free Vectors and Arrays */

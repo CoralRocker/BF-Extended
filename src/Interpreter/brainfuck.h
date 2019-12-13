@@ -34,7 +34,7 @@ const char* KNRM = "\033[0m";
 /* Boolean Definition */
 typedef enum boolean {false, true} bool;
 
-/* Scratchpad save method.
+/* Scratchpad save structure.
  * This allows us to save all the memory from the program
  * state to a single structure, which facilitates the opening
  * and closing of scratchpads. 
@@ -208,7 +208,9 @@ FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
 }
 /* Remove specifc cells and free their memory.
  * If this method is used improperly, it is
- * possible to remove all the cells in memory, which would be an issue.*/
+ * possible to remove all the cells in memory,
+ * which would be an issue.
+ */
 void trimMemory(){
 	int option = atVector(bfArray, bfArrPos);//Get what cells to remove
 	if(option == 0){ // If cells to remove is 0, remove all cells after the last populated one

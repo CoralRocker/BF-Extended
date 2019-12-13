@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 	vector *fileNameArray = initVector();
 	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname));
 	FILE *f = backVector(fileArray);
+	pushBackVector(inputFileArr, stdin);
 
 	char c; // Character
 	bool comment = false; //Check if code is commented out or not
@@ -176,6 +177,19 @@ int main(int argc, char **argv)
 				case '^': //Return-to-zero operator
 					bfArrPos = 0;
 					break;
+				case '%': //Open separate file
+					{
+						int numChars = atVector(bfArray, bfArrPos);
+						if(numChars != 0){
+							char* filename = malloc(numChars);
+							for(int i = 0; i < numChars; i++){
+								filename[i] = atVector(bfArray, bfArrPos+1+i);
+							}
+							puts(filename);
+							free(filename);
+						}
+					break;
+					}
 				case 'd': // Debug Information
 					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
 					break;
@@ -188,7 +202,8 @@ int main(int argc, char **argv)
 	freeVector(bfLoop);
 	freeVector(ScratchArr);
 	freeVector(fileArray);
-	
+	freeVector(inputFileArr);
+
 	printf("\n");
 	
 	/* Close Files */

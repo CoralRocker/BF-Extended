@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 /* Vectors and Variables Needed */
-vector *bfArray, *bfLoop, *ScratchArr;
+vector *bfArray, *bfLoop, *ScratchArr, *inputFileArr;
 uint64_t bfArrSize = 1, bfArrPos = 0, bfLpPos = 0;
 
 /* Text Color Constants */

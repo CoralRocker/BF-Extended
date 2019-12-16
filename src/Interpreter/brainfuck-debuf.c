@@ -38,8 +38,10 @@ int main(int argc, char **argv)
 	bool comment = false; //Check if code is commented out or not
 	char* buf;
 	size_t buflen;
+	int line = 0, character = 0;
 	while(getline(&buf, &buflen, rf)!=-1)
 	{
+		line++;
 		int curPlace = ftell(f);
 		fputs(buf, f);
 		fseek(f, curPlace, SEEK_SET);
@@ -147,7 +149,7 @@ int main(int argc, char **argv)
 							size_t tempLen;
 							FILE* tempStream;
 							tempStream = open_memstream(&tempBuf, &tempLen);
-							while((c = fgetc(f))!= '@' && c != EOF){
+							while((c = fgetc(rf))!= '@' && c != EOF){
 								fputc(c, tempStream);
 							}
 							fclose(tempStream);
@@ -157,8 +159,9 @@ int main(int argc, char **argv)
 							rf = backVector(fileArray);
 							pushBackVector(fileNameArray, tempBuf);
 							pushBackVector(tempFileArray, tmpfile());
+							f = backVector(tempFileArray);
 							/* Check for error */
-							if(f==NULL)
+							if(rf==NULL)
 								printf("ERROR: %s: Invalid File Name\n");
 							/* Open Include System */
 							openInclude();

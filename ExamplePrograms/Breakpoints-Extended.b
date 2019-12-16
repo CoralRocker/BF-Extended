@@ -7,7 +7,6 @@
 
 */
 /* If comments do not work, will print out a '1' */
-
 /* Does scratch memory work? */
 +++ +++ >
 +++ +++ 

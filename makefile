@@ -13,4 +13,6 @@ env: src/Interpreter/brainfuck-env.c
 
 deprecated: src/Interpreter/Deprecated/brainfuck.c
 	$(CC) $(CFLAGS) src/Interpreter/Deprecated/brainfuck.c -o bfe-int-dep
-	
+
+debug: src/Interpreter/brainfuck-debuf.c
+	$(CC) $(CFLAGS) src/Interpreter/brainfuck-debuf.c -o bfe-dbg

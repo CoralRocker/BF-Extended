@@ -11,6 +11,7 @@ syntax region BFComment start="/\*" end="\*/"
 syntax match BFStatement "[+-,.<>]"
 syntax region BFInclude start="@" end="@"
 syntax match BFInclude "!"
+syntax match BFInclude ".*\(todo\|TODO\|Todo\).*"
 highlight link BFStatement Keyword
 highlight link BFComment Comment
 highlight link BFInclude Todo

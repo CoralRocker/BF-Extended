@@ -11,7 +11,6 @@ Loops Work?
 Expected output: 00
 Wrong output: 0
 	      6?
-
 Pointer Loopback?
 [-]++++++++[->++++++<]>[-<+>]<<<<<.[-]++++++++++.[-]<
 Expected output: 0

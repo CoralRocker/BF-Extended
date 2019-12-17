@@ -116,7 +116,10 @@ int main(int argc, char **argv)
 							pushBackVector(bfLoop, (void*) ftell(f));
 							bfLpPos++;
 						}else{
-							while((c = fgetc(f))!=']');
+							while((c = fgetc(f))!=']'){
+								character++;
+
+							};
 						}
 						break;
 	
@@ -229,6 +232,7 @@ int main(int argc, char **argv)
 		}
 		free(buf);
 		buflen = 0;
+		character = 0;
 	}
 
 	/* Free Vectors and Arrays */

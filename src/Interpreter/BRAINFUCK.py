@@ -56,7 +56,7 @@ class brainfuck:
         self.fileArray = []
         self.fnameArray = [fileName]
         self.fileArray.append(open(self.fnameArray[0], "r"))
-        self.MemoryArray = [BFUTIL.Memory()]
+        self.MemoryArray = [Memory()]
         self.curMem = self.MemoryArray[0]
         
         self.f = self.fileArray[0]
@@ -110,7 +110,7 @@ class brainfuck:
             elif c == ',':
                 self.curMem.BFArray[self.curMem.BFArrPo] = sys.stdin.read(1)
             elif c == '{':
-                self.MemoryArray.append(BFUTIL.Memory(BFA=[self.curMem.BFArray[self.curMem.BFArrPos]]))
+                self.MemoryArray.append(Memory(BFA=[self.curMem.BFArray[self.curMem.BFArrPos]]))
                 self.curMem = self.MemoryArray[len(self.MemoryArray)-1]
             elif c == '}':
                 MemArrLen = len(self.MemoryArray)
@@ -145,7 +145,7 @@ class brainfuck:
                     self.f = self.fileArray[len(self.fileArray)-1]
                 
                 numItems =  self.curMem.BFArray[self.curMem.BFArrPos]
-                tempmem = BFUTIL.Memory()
+                tempmem = Memory()
                 for i in range(1, numItems+1):
                     tempMem.BFArray.append(self.curMem.BFArray[self.curMem.BFArrPos + i])
                 self.MemoryArray.append(tempmem)
@@ -155,7 +155,7 @@ class brainfuck:
                 numItems =  self.curMem.BFArray[self.curMem.BFArrPos]
                 tempmem = self.MemoryArray[len(self.MemoryArray)-2]
                 for i in range(numItems):
-                    BFUTIL.modInsert(tempmem.BFArray, tempmem.BFArrPos+i, self.curMem.BFArray[self.curMem.BFArrPos+i])
+                    modInsert(tempmem.BFArray, tempmem.BFArrPos+i, self.curMem.BFArray[self.curMem.BFArrPos+i])
                 self.fileArray.pop()
                 self.fnameArray.pop()
                 f = self.fileArray[len(self.fileArray)-1]

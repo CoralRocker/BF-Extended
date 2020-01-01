@@ -10,7 +10,6 @@ class CURPLACE:
         self.fname = farrs[1]
         self.farr = farrs[0]
         self.fpos = fpos
-        self.comment = False
 
 class brainfuck:
     
@@ -20,7 +19,8 @@ class brainfuck:
         self.fileArray.append(open(self.fnameArray[0], "r"))
         self.MemoryArray = [BFUTIL.Memory()]
         self.curMem = self.MemoryArray[0]
-        
+        self.comment = False
+
         self.f = self.fileArray[0]
         
     def step(self):

@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall
 
-all: src/Interpreter/brainfuck.c src/Interpreter/brainfuck-env.c
+all: src/Interpreter/brainfuck.c src/Interpreter/brainfuck-env.c src/Interpreter/BRAINFUCK.py
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck.c -o bfe-int
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck-env.c -o bfe-env
 

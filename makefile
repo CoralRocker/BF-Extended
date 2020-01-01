@@ -2,6 +2,7 @@ CC=gcc
 CFLAGS=-Wall
 
 all: src/Debugger/Wrapper.py src/Interpreter/brainfuck.c src/Interpreter/brainfuck-env.c src/Interpreter/BRAINFUCK.py
+	rm bfe-*
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck.c -o bfe-int
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck-env.c -o bfe-env
 	ln -s src/Interpreter/BRAINFUCK.py bfe-py

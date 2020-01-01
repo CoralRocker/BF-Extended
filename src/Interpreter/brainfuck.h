@@ -48,7 +48,7 @@ typedef struct scratchpad {
 /* Opens up a classic style scratchpad */
 void openScratchPad(){
 	/* Save program state to a scratchpad */
-	scratchpad *temp = malloc(sizeof(scratchpad));
+	scratchpad *temp = (scratchpad*)malloc(sizeof(scratchpad));
 	temp->arrPtr = initVector();
 	temp->loopPtr = initVector();
 	temp->prevArr = bfArray;

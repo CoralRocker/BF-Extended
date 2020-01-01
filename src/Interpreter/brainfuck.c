@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 					break;
 					}
 				case '#':
-					printf("%d", atVector(bfArray, bfArrPos));
+					printf("%d", (int) atVector(bfArray, bfArrPos));
 					break;
 				case '@': //Open include file
 					{	
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 						
 						/* Check for error */
 						if(f==NULL)
-							printf("ERROR: %s: Invalid File Name\n");
+							printf("ERROR: %s: Invalid File Name\n", tempBuf);
 						/* Open Include System */
 						openInclude();
 						/* Free Memory */
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 					break;
 				case '%': //Open separate file
 					{
-						int numChars = atVector(bfArray, bfArrPos);
+						int numChars = (int) atVector(bfArray, bfArrPos);
 						if(numChars != 0){
 							char* filename = malloc(numChars+1);
 							for(int i = 0; i < numChars; i++){

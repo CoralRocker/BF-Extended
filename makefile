@@ -4,6 +4,7 @@ CFLAGS=-Wall
 all: src/Interpreter/brainfuck.c src/Interpreter/brainfuck-env.c src/Interpreter/BRAINFUCK.py
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck.c -o bfe-int
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck-env.c -o bfe-env
+	ln -s src/Interpreter/BRAINFUCK.py bfe-py
 
 vector: src/Interpreter/brainfuck.c
 	$(CC) $(CFLAGS) src/Interpreter/brainfuck.c -o bfe-int

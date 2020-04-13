@@ -13,12 +13,12 @@ int main(int argc, char** argv){
 
 	/* File Setup */
 	//Necessary Includes
-	printToFile("#include <stdio.h>\n#include \"Vector.h\"\n", out);
+	printToFile("#include <stdio.h>\n#include \"Vector.h\"\n#include \"VoidVector.h\"\n", out);
 	//Function to trim memory appropriately. Copied from same function in Interpreter/brainfuck.h
 	printToFile("void trimMemory(vector* v){int option = curVector(v);if(option==0){int pos = v->size-1;while(pos != 0){int val = atVector(v, pos);if(val == 0)popBackVector(v);else if(val != 0) break; pos--;}}else{int pos = 0; while(pos < v->size){if(atVector(v,pos)==option)eraseVector(v,pos);else pos++;}}if(v->curpos >= v->size)v->curpos=v->size-1; else if(v->size <= 0){pushBackVector(v, 0);v->curpos=0;}}\n", out);
 	//Main function and vector declarations
 	printToFile("int main(){\n", out);
-	printToFile("vector *v = initVector();\npushBackVector(v, 0);\n", out);
+	printToFile("voidVector* parentVectors = initVoidVector(); pushBackVoidVector(parentVectors, initVector()); vector *v = backVoidVector(parentVectors);\npushBackVector(v, 0);\n", out);
 
 	char c;
 	while((c = fgetc(f)) != EOF){
@@ -84,11 +84,6 @@ int main(int argc, char** argv){
 							}
 						}
 					}
-				}else if(fgetc(f) == '/'){
-					while(1){
-						if(fgetc(f) == '\n')
-							break;
-					}
 				}else{
 					fseek(f, -1, SEEK_CUR);
 				}
@@ -106,8 +101,13 @@ int main(int argc, char** argv){
 				printToFile("v->curpos=v->size-1;", out);
 				break;
 			case '|':
-				printToFile("trimMemory(v);", out); //Call function declared earlier. More 
+				printToFile("trimMemory(v);", out); //Call function declared earlier. More efficient 
 				break;
+			case '{':
+				printToFile("pushBackVoidVector(parentVectors, initVector()); pushBackVector(backVoidVector(parentVectors), curVector(v)); v = backVoidVector(parentVectors);", out);
+				break;
+			case '}':
+				printToFile("vector* tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); setVector(v, curVector(tmp)); freeVector(tmp);", out);
 		}
 	}
 

@@ -100,13 +100,13 @@ void eraseVector(vector *v, int index)
 		return;
 	
 	// Temporary Arrays
-	int* temp = malloc(sizeof(int)*v->size);
+	int* temp = (int*)malloc(sizeof(int)*v->size);
 	memcpy(temp, v->arr, sizeof(int)*v->size);
 
 	// Update Actual Array
 	free(v->arr);
 	v->size--;
-	v->arr = malloc(sizeof(int)*v->size);
+	v->arr = (int*)malloc(sizeof(int)*v->size);
 
 	// Move Information
 	memcpy(v->arr, temp, sizeof(int)*index);
@@ -166,7 +166,7 @@ int atVector(vector *v, int index)
 
 /* Gets the value of the first element in the vector. Returns 0 if the vector is of size 0.
  */
-int* frontVector(vector *v)
+int frontVector(vector *v)
 {
 	return (v->size > 0) ? v->arr[0] : 0;
 }
@@ -226,6 +226,10 @@ void decVector(vector* v){
 
 int curVector(vector* v){
 	return v->arr[v->curpos];
+}
+
+void setVector(vector* v, int val){
+	v->arr[v->curpos] = val;
 }
 
 void addVector(vector* v, int val){

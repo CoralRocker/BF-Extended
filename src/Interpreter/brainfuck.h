@@ -76,7 +76,7 @@ void openScratchPad(){
  */
 void closeScratchPad(){	
 	/* Load old program state from previously save scratchpad */
-	scratchpad *temp = popBackVector(ScratchArr);
+	scratchpad *temp = (scratchpad*)popBackVector(ScratchArr);
 	bfArray = temp->prevArr;
 	bfLoop = temp->prevLoop;
 

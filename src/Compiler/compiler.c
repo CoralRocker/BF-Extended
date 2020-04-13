@@ -12,8 +12,11 @@ int main(int argc, char** argv){
 	FILE *out = fopen("bf.c", "w");
 
 	/* File Setup */
+	//Necessary Includes
 	printToFile("#include <stdio.h>\n#include \"Vector.h\"\n", out);
+	//Function to trim memory appropriately. Copied from same function in Interpreter/brainfuck.h
 	printToFile("void trimMemory(vector* v){int option = curVector(v);if(option==0){int pos = v->size-1;while(pos != 0){int val = atVector(v, pos);if(val == 0)popBackVector(v);else if(val != 0) break; pos--;}}else{int pos = 0; while(pos < v->size){if(atVector(v,pos)==option)eraseVector(v,pos);else pos++;}}if(v->curpos >= v->size)v->curpos=v->size-1; else if(v->size <= 0){pushBackVector(v, 0);v->curpos=0;}}\n", out);
+	//Main function and vector declarations
 	printToFile("int main(){\n", out);
 	printToFile("vector *v = initVector();\npushBackVector(v, 0);\n", out);
 
@@ -73,19 +76,18 @@ int main(int argc, char** argv){
 				printToFile("}", out);
 			case '/':
 				if(fgetc(f) == '*'){
-					int breakout = 0;
-					printf("Entering comment\n");
 					while(1){
 						if(fgetc(f) == '*')
 						{
-							//puts("Found *");
 							if(fgetc(f) == '/'){
-							//	printf("Exiting comment\n");
 								break;	
 							}
 						}
-							//printf("going back one\t");
-							//fseek(f, -1, SEEK_CUR); // Skip one character ahead
+					}
+				}else if(fgetc(f) == '/'){
+					while(1){
+						if(fgetc(f) == '\n')
+							break;
 					}
 				}else{
 					fseek(f, -1, SEEK_CUR);
@@ -104,7 +106,7 @@ int main(int argc, char** argv){
 				printToFile("v->curpos=v->size-1;", out);
 				break;
 			case '|':
-				printToFile("trimMemory(v);", out);
+				printToFile("trimMemory(v);", out); //Call function declared earlier. More 
 				break;
 		}
 	}

@@ -45,6 +45,10 @@ int main(int argc, char **argv)
 				c = fgetc(f);
 				if(c == '*')
 					comment = true;
+				else if(c == '/')
+					while(1)
+						if(fgetc(f)=='\n')
+							break;
 				else
 					fseek(f, temp, SEEK_SET);
 				break;

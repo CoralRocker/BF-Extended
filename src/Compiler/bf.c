@@ -4,6 +4,6 @@ void trimMemory(vector* v){int option = curVector(v);if(option==0){int pos = v->
 int main(){
 vector *v = initVector();
 pushBackVector(v, 0);
-addVector(v, 2);shiftRight(v);addVector(v, 3);shiftRight(v);addVector(v, 2);shiftRight(v);incVector(v);shiftRight(v);while(curVector(v)){decVector(v);}shiftLeft(v);shiftLeft(v);shiftLeft(v);shiftLeft(v);while(curVector(v)){printf("%d", curVector(v));shiftRight(v);}addVector(v, 3);trimMemory(v);shiftLeft(v);shiftLeft(v);shiftLeft(v);shiftLeft(v);while(curVector(v)){printf("%d", curVector(v));shiftRight(v);}
+addVector(v, 2);shiftRight(v);addVector(v, 4);addVector(v, 4);addVector(v, 4);addVector(v, 4);shiftRight(v);while(curVector(v)){decVector(v);}v->curpos=0;while(curVector(v)){shiftRight(v);shiftRight(v);incVector(v);shiftLeft(v);shiftLeft(v);decVector(v);}incVector(v);shiftRight(v);while(curVector(v)){shiftLeft(v);while(curVector(v)){shiftRight(v);shiftRight(v);shiftRight(v);shiftRight(v);incVector(v);shiftLeft(v);shiftLeft(v);shiftLeft(v);shiftLeft(v);decVector(v);}shiftRight(v);shiftRight(v);shiftRight(v);shiftRight(v);while(curVector(v)){shiftLeft(v);shiftLeft(v);while(curVector(v)){shiftLeft(v);shiftLeft(v);incVector(v);shiftRight(v);shiftRight(v);shiftRight(v);incVector(v);shiftLeft(v);decVector(v);}shiftRight(v);while(curVector(v)){shiftLeft(v);incVector(v);shiftRight(v);decVector(v);}shiftRight(v);decVector(v);}shiftLeft(v);shiftLeft(v);shiftLeft(v);decVector(v);}shiftLeft(v);printf("%d", curVector(v));
 freeVector(v);
 }

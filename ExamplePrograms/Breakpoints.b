@@ -1,3 +1,4 @@
+/*
 Testing breakFunctions for errors
 -------------------------
 COMPLETE EXPECTED OUTPUT:
@@ -5,6 +6,8 @@ COMPLETE EXPECTED OUTPUT:
 0
 0
 -------------------------
+*/
+
 
 Loops Work?
 ++++++++++++++++++++++++++++++++++++++++++++++++.[->+<]>.[-]++++++++++.[-]<

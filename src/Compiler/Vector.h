@@ -227,3 +227,12 @@ void decVector(vector* v){
 int curVector(vector* v){
 	return v->arr[v->curpos];
 }
+
+void addVector(vector* v, int val){
+	v->arr[v->curpos] += val;
+}
+
+void subVector(vector* v, int val){
+	v->arr[v->curpos] -= val;
+	if(v->arr[v->curpos] < 0) v->arr[v->curpos] = 0;
+}

@@ -1,15 +1,76 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "VoidVector.h"
+#include <unistd.h>
 
 void printToFile(char* str, FILE* outfile){
 	fwrite(str, strlen(str), 1, outfile);
+}
+
+/* Given a file pointer and a file names,
+ * this method gives the absolute path of
+ * the root directory.
+ */
+char* rootDir(FILE* f, char* strname){
+        /* Get full file path */
+        int file_descriptor = fileno(f);
+        char* dirname = malloc(1024);
+        char fdpath[1024];
+        ssize_t n;
+        sprintf(fdpath, "/proc/self/fd/%d", file_descriptor);
+        n = readlink(fdpath, dirname, 1024);
+        if(n < 0)
+                return NULL;
+        dirname[n] = 0x0;
+        
+        /* Remove original file name from root directory, up to the first '/' */
+        int strLen = strlen(strname);
+        for(int i = n - 1; i >= n - strLen; i--){
+                if(dirname[i] == '/')
+                        break;
+                dirname[i]=0x0;
+        }
+
+        return dirname;
+}
+
+/* Get a file pointer for a file relative to another file's location,
+ * given a file name.
+ */
+FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
+        /* Get Root Directory of file and string lengths */
+        char* rootdir = rootDir(f, strname);
+        int rlen = strlen(rootdir);
+        int alen = strlen(relativePath);
+
+        /* Add file name to absolute path */
+        for(int i = rlen; i < rlen+alen; i++)
+                rootdir[i] = relativePath[i-rlen];
+
+        rootdir[rlen+alen] = 0x00;
+        
+        /* Open new file */
+        FILE* newFile = fopen(rootdir, "r");
+        
+        /* Check if file is good */
+        if(!newFile)
+                perror("ERROR");
+
+        /* Free memory */
+        free(rootdir);
+
+        return newFile;
 }
 
 int main(int argc, char** argv){
 	/* FILES */
 	FILE *f = fopen(argv[1], "r");
 	FILE *out = fopen("bf.c", "w");
+	voidVector* fileVector = initVoidVector();
+	pushBackVoidVector(fileVector, f);
+	voidVector* fnameVector = initVoidVector();
+	pushBackVoidVector(fnameVector, argv[1]);
 
 	/* File Setup */
 	//Necessary Includes
@@ -108,6 +169,26 @@ int main(int argc, char** argv){
 				break;
 			case '}':
 				printToFile("vector* tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); setVector(v, curVector(tmp)); freeVector(tmp);", out);
+				break;
+			case '@':{
+				char *fname = malloc(sizeof(char)*256);
+				int counter = 0;
+				while((c = fgetc(f))!='@'){
+					fname[counter]=c; // strncat wasn't working for some damn reason. 
+					counter++;
+				}
+				printf("Including file %s\n", fname);
+				pushBackVoidVector(fileVector, relativeFilePointer(f, backVoidVector(fnameVector), fname ));
+				pushBackVoidVector(fnameVector, fname);
+
+				printToFile("pushBackVoidVector(parentVectors, initVector()); vector* tmp = backVoidVector(parentVectors); int args_to_pass = curVector(v); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);", out);
+				break;
+				}
+			case '!':
+				fclose(popBackVoidVector(fileVector));
+				f = backVoidVector(fileVector);
+				printToFile("vector* tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); int args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i, atVector(tmp, tmp->curpos+i));} freeVector(tmp);", out);
+				break;
 		}
 	}
 

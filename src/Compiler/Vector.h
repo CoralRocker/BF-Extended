@@ -240,3 +240,10 @@ void subVector(vector* v, int val){
 	v->arr[v->curpos] -= val;
 	if(v->arr[v->curpos] < 0) v->arr[v->curpos] = 0;
 }
+
+void assignOrPushVector(vector* v, int index, int val){
+	if(index >= v->size){
+		pushBackVector(v, val);
+	}else
+		assignVector(v, index, val);
+}

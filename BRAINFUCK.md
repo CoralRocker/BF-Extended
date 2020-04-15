@@ -30,6 +30,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |\||[Trim program](#instruction-pointer-manipulation)
 |\\*|[Open Comment](#comments-)
 \*\\ |[Close Comment](#comments-)
+|\/\/|[Single-Line Comment](#comments-)
 |d|Prints Debug Information|
 
 ---

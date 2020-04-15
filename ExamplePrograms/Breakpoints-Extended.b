@@ -1,4 +1,3 @@
-/* Do Comments Work? */
 /*
 
 +++ +++

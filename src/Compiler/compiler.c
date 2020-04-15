@@ -21,7 +21,7 @@ char* rootDir(FILE* f, char* strname){
         sprintf(fdpath, "/proc/self/fd/%d", file_descriptor);
         n = readlink(fdpath, dirname, 1024);
         if(n < 0)
-                return NULL;
+                return 0x00;
         dirname[n] = 0x0;
         
         /* Remove original file name from root directory, up to the first '/' */
@@ -79,16 +79,16 @@ int main(int argc, char** argv){
 	printToFile("void trimMemory(vector* v){int option = curVector(v);if(option==0){int pos = v->size-1;while(pos != 0){int val = atVector(v, pos);if(val == 0)popBackVector(v);else if(val != 0) break; pos--;}}else{int pos = 0; while(pos < v->size){if(atVector(v,pos)==option)eraseVector(v,pos);else pos++;}}if(v->curpos >= v->size)v->curpos=v->size-1; else if(v->size <= 0){pushBackVector(v, 0);v->curpos=0;}}\n", out);
 	//Main function and vector declarations
 	printToFile("int main(){\n", out);
-	printToFile("voidVector* parentVectors = initVoidVector(); pushBackVoidVector(parentVectors, initVector()); vector *v = backVoidVector(parentVectors);\npushBackVector(v, 0);\n", out);
+	printToFile("voidVector* parentVectors = initVoidVector(); pushBackVoidVector(parentVectors, initVector()); vector *tmp, *v = backVoidVector(parentVectors);\npushBackVector(v, 0);\nint args_to_pass;\n", out);
 
 	char c;
 	while((c = fgetc(f)) != EOF){
 		switch(c){
 			case '>':
-				printToFile("shiftRight(v);", out);
+				printToFile("shiftRight(v);\n", out);
 				break;
 			case '<':
-				printToFile("shiftLeft(v);", out);
+				printToFile("shiftLeft(v);\n", out);
 				break;
 			case '+':
 				if(fgetc(f) == '+'){
@@ -104,7 +104,7 @@ int main(int argc, char** argv){
 					printToFile(o, out);
 				}else{
 					fseek(f, -1, SEEK_CUR);
-					printToFile("incVector(v);", out);
+					printToFile("incVector(v);\n", out);
 				}
 				break;
 			case '-':
@@ -121,20 +121,20 @@ int main(int argc, char** argv){
 					printToFile(o, out);
 				}else{
 					fseek(f, -1, SEEK_CUR);
-					printToFile("decVector(v);", out);
+					printToFile("decVector(v);\n", out);
 				}
 				break;
 			case ',':
-				printToFile("v->arr[v->curpos] = getchar();", out);
+				printToFile("v->arr[v->curpos] = getchar();\n", out);
 				break;
 			case '.':
-				printToFile("putchar(curVector(v));", out);
+				printToFile("putchar(curVector(v));\n", out);
 				break;
 			case '[':
-				printToFile("while(curVector(v)){", out);
+				printToFile("while(curVector(v)){\n", out);
 				break;
 			case ']':
-				printToFile("}", out);
+				printToFile("}\n", out);
 			case '/':
 				if(fgetc(f) == '*'){
 					while(1){
@@ -150,25 +150,25 @@ int main(int argc, char** argv){
 				}
 				break;
 			case '#':
-				printToFile("printf(\"%d\", curVector(v));", out);
+				printToFile("printf(\"%d\", curVector(v));\n", out);
 				break;
 			case 'd':
-				printToFile("printf(\"Current Cell: %d\\nCurrent Size: %d\\nCurrent Value: %d\\n\", v->curpos, v->size, curVector(v));", out);
+				printToFile("printf(\"Current Cell: %d\\nCurrent Size: %d\\nCurrent Value: %d\\n\", v->curpos, v->size, curVector(v));\n", out);
 				break;
 			case '^':
-				printToFile("v->curpos=0;", out);
+				printToFile("v->curpos=0;\n", out);
 				break;
 			case '~':
-				printToFile("v->curpos=v->size-1;", out);
+				printToFile("v->curpos=v->size-1;\n", out);
 				break;
 			case '|':
-				printToFile("trimMemory(v);", out); //Call function declared earlier. More efficient 
+				printToFile("trimMemory(v);\n", out); //Call function declared earlier. More efficient 
 				break;
 			case '{':
-				printToFile("pushBackVoidVector(parentVectors, initVector()); pushBackVector(backVoidVector(parentVectors), curVector(v)); v = backVoidVector(parentVectors);", out);
+				printToFile("pushBackVoidVector(parentVectors, initVector()); pushBackVector(backVoidVector(parentVectors), curVector(v)); v = backVoidVector(parentVectors);\n", out);
 				break;
 			case '}':
-				printToFile("vector* tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); setVector(v, curVector(tmp)); freeVector(tmp);", out);
+				printToFile("tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); setVector(v, curVector(tmp)); freeVector(tmp);\n", out);
 				break;
 			case '@':{
 				char *fname = malloc(sizeof(char)*256);
@@ -180,14 +180,15 @@ int main(int argc, char** argv){
 				printf("Including file %s\n", fname);
 				pushBackVoidVector(fileVector, relativeFilePointer(f, backVoidVector(fnameVector), fname ));
 				pushBackVoidVector(fnameVector, fname);
-
-				printToFile("pushBackVoidVector(parentVectors, initVector()); vector* tmp = backVoidVector(parentVectors); int args_to_pass = curVector(v); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);", out);
+				f = backVoidVector(fileVector);
+				printToFile("pushBackVoidVector(parentVectors, initVector()); tmp = backVoidVector(parentVectors); args_to_pass = curVector(v); if(args_to_pass == 0) pushBackVector(tmp, 0); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);\n", out);
 				break;
 				}
 			case '!':
 				fclose(popBackVoidVector(fileVector));
+				popBackVoidVector(fnameVector);
 				f = backVoidVector(fileVector);
-				printToFile("vector* tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); int args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i, atVector(tmp, tmp->curpos+i));} freeVector(tmp);", out);
+				printToFile("tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i, atVector(tmp, tmp->curpos+i));} freeVector(tmp);\n", out);
 				break;
 		}
 	}

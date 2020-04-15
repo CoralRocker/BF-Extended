@@ -7,6 +7,5 @@ compiler: ./compiler.c
 
 test: compiler
 	./Compiler $(BF)
-	echo "Compiled"
 	$(CC) $(CFLAGS) bf.c -o bf.o
 

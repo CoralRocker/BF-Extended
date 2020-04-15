@@ -16,8 +16,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp; This interpreter is deprecated because it is much harder to code for it than the brainfuck.v.c interpreter, and its speed advantage over the vector-based interpreter is negligible at best. It works, but does not have the same features as brainfuck.v.c. It will not be updated further. It does not have unlimited amounts of scratch memory like brainfuck.v.c does. In short, don't use this.
 
 ## Compiler
-### [src/Compiler/](src/Compiler/)
-&nbsp;&nbsp;&nbsp;&nbsp;Still working out the way I want this to work. Therefore, nothing actually works in here yet. Hence, no file, in C or otherwise. It will compile directly to ASM when its done, but there might be a version which compiles to C. I don't know yet. No compiler code is written yet
+### [src/Compiler/compiler.c](src/Compiler/compiler.c)
+&nbsp;&nbsp;&nbsp;&nbsp;This is the compiler for Brainfuck-Extended. It is written in C and compiles code to C. Then, GCC or Clang can be used to compile said C code. It includes two C header files, [VoidVector.h](src/Compiler/VoidVector.h) and [Vector.h](src/Compiler/Vector.h), which are used by both the compiler itself, and the compiled brainfuck programs. The compiler does not have any strong optimizations in it yet, but they are coming. Using the compiler is not yet recommended because, while it does work, it has no mechanisms for catching flaws in users' code and usually just SegFaults. 
+
+### [src/Compiler/Makefile](src/Compiler/Makefile)
+&nbsp;&nbsp;&nbsp;&nbsp;This makefile allows users to both compile the compiler and compile Brainfuck programs. It is not the final version of the system to fully compile Brainfuck programs.
 
 ## Debugger
 ### [src/Debugger/](src/Debugger/)

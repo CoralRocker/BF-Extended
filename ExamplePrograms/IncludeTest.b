@@ -1,3 +1,3 @@
-/* OOP? */
-+++ +++[>++++++++<-]>.<[-]
-@IncludeTest.include.b@*/
+[-]
+@IncludeTest.include.b@
+[>++++++<-]>.

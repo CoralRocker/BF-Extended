@@ -1,3 +1,3 @@
-[-] // Pass no args
-@IncludeTest.include.b@ // Call file
-[>+++ +++<-]. 
+/* OOP? */
++++ +++[>++++++++<-]>.<[-]
+@IncludeTest.include.b@*/

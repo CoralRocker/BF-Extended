@@ -33,8 +33,6 @@ int main(int argc, char **argv)
 
 	char c; // Character
 	bool comment = false; //Check if code is commented out or not
-	
-	puts("starting to read");
 
 	/* Compile Loop */	
 	while((c = fgetc(f)) != EOF)

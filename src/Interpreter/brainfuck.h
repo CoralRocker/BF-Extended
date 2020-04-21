@@ -109,7 +109,7 @@ void openInclude(){
 	temp->prevLoopPos = bfLpPos;
 	
 	/* Set new program state */
-	int numItems = atVector(bfArray, bfArrPos);
+	int numItems = (int)atVector(bfArray, bfArrPos);
 	bfArray = temp->arrPtr;
 	bfLoop = temp->loopPtr;
 	bfArrPos = 0;

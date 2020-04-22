@@ -6,39 +6,87 @@ int main(){
 voidVector* parentVectors = initVoidVector(); pushBackVoidVector(parentVectors, initVector()); vector *tmp, *v = backVoidVector(parentVectors);
 pushBackVector(v, 0);
 int args_to_pass;
-while(curVector(v)){
-decVector(v);
-}
+addVector(v, 2);shiftRight(v);
+addVector(v, 8);shiftRight(v);
+addVector(v, 8);v->curpos=0;
 pushBackVoidVector(parentVectors, initVector()); tmp = backVoidVector(parentVectors); args_to_pass = curVector(v); if(args_to_pass == 0) pushBackVector(tmp, 0); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);
-addVector(v, 3);addVector(v, 3);printf("%d", curVector(v));
+shiftRight(v);
+shiftRight(v);
+while(curVector(v)){
+decVector(v);
+}
+shiftLeft(v);
+shiftLeft(v);
 while(curVector(v)){
 shiftRight(v);
-addVector(v, 4);addVector(v, 4);shiftLeft(v);
+shiftRight(v);
+incVector(v);
+shiftLeft(v);
+shiftLeft(v);
+decVector(v);
+}
+incVector(v);
+shiftRight(v);
+while(curVector(v)){
+shiftRight(v);
+shiftRight(v);
+while(curVector(v)){
 decVector(v);
 }
 shiftRight(v);
-putchar(curVector(v));
+while(curVector(v)){
+decVector(v);
+}
+v->curpos=0;
+while(curVector(v)){
+v->curpos=v->size-1;
+incVector(v);
+v->curpos=0;
+decVector(v);
+}
+while(curVector(v)){
+incVector(v);
+decVector(v);
+}
+v->curpos=v->size-1;
+while(curVector(v)){
+shiftLeft(v);
+shiftLeft(v);
+while(curVector(v)){
+shiftLeft(v);
+shiftLeft(v);
+incVector(v);
+shiftRight(v);
+shiftRight(v);
+shiftRight(v);
+incVector(v);
+shiftLeft(v);
+decVector(v);
+}
+shiftRight(v);
 while(curVector(v)){
 shiftLeft(v);
 incVector(v);
 shiftRight(v);
 decVector(v);
 }
-shiftLeft(v);
-putchar(curVector(v));
+shiftRight(v);
+decVector(v);
+}
+v->curpos=0;
+shiftRight(v);
+decVector(v);
+}
+v->curpos=0;
 while(curVector(v)){
+shiftRight(v);
+incVector(v);
+shiftLeft(v);
 decVector(v);
 }
 incVector(v);
-shiftRight(v);
-addVector(v, 4);addVector(v, 4);shiftLeft(v);
-tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i, atVector(tmp, tmp->curpos+i));} freeVector(tmp);
-while(curVector(v)){
-shiftRight(v);
-addVector(v, 3);addVector(v, 3);shiftLeft(v);
-decVector(v);
-}
-putchar(curVector(v));
+tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i-1, atVector(tmp, tmp->curpos+i));} freeVector(tmp);
+printf("%d", curVector(v));
 
 freeVector(v);
 }

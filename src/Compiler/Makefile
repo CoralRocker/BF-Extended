@@ -7,5 +7,5 @@ compiler: ./compiler.c
 
 test: compiler
 	./Compiler $(BF)
-	$(CC) $(CFLAGS) bf.c -o bf.o
+	$(CC) $(CFLAGS) bf.c -O0 -o bf.o
 

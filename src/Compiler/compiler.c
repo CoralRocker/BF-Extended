@@ -186,7 +186,7 @@ int main(int argc, char** argv){
 				}
 			case '!':
 				fclose(popBackVoidVector(fileVector));
-				popBackVoidVector(fnameVector);
+				free(popBackVoidVector(fnameVector));
 				f = backVoidVector(fileVector);
 				printToFile("tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i-1, atVector(tmp, tmp->curpos+i));} freeVector(tmp);\n", out);
 				break;

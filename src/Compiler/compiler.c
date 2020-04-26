@@ -136,7 +136,8 @@ int main(int argc, char** argv){
 			case ']':
 				printToFile("}\n", out);
 			case '/':
-				if(fgetc(f) == '*'){
+				c = fgetc(f);
+				if(c == '*'){
 					while(1){
 						if(fgetc(f) == '*')
 						{
@@ -144,6 +145,13 @@ int main(int argc, char** argv){
 								break;	
 							}
 						}
+					}
+				}else if(c == '/'){
+					puts("Single-line");
+					while(1){
+						c = fgetc(f);
+						if(c == '\n' || c == EOF)
+							break;
 					}
 				}else{
 					fseek(f, -1, SEEK_CUR);

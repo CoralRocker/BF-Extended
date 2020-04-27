@@ -9,3 +9,5 @@ test: compiler
 	./Compiler $(BF)
 	$(CC) $(CFLAGS) bf.c -O0 -o bf.o
 
+clean:
+	rm Compiler bf.o bf.c

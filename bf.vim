@@ -1,5 +1,5 @@
 " Vim Syntax File
-" Language: Brainfuck Extended
+" Language: Brainfuck-Extended
 " Maintainer: Gaultier Delbarre
 if exists("b:current_syntax")
 	finish
@@ -11,6 +11,7 @@ let b:current_syntax = "bf"
 " Syntax to match
 " Comments
 syntax region BFComment start="/\*" end="\*/"
+syntax region BFComment start='//' end='\n'
 
 " Statements
 syntax match BFStatement "[+-,.]"

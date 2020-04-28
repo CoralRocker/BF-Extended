@@ -3,6 +3,7 @@
 #include <string.h>
 #include "VoidVector.h"
 #include <unistd.h>
+#include "PreProcess.h"
 
 void printToFile(char* str, FILE* outfile){
 	fwrite(str, strlen(str), 1, outfile);
@@ -65,7 +66,8 @@ FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
 
 int main(int argc, char** argv){
 	/* FILES */
-	FILE *f = fopen(argv[1], "r");
+	FILE *f = tmpfile();
+	fremoveSpace(fopen(argv[1], "r"), f);
 	FILE *out = fopen("bf.c", "w");
 	voidVector* fileVector = initVoidVector();
 	pushBackVoidVector(fileVector, f);
@@ -91,6 +93,7 @@ int main(int argc, char** argv){
 				printToFile("shiftLeft(v);\n", out);
 				break;
 			case '+':
+				
 				if(fgetc(f) == '+'){
 					int count = 2;
 					while(fgetc(f) == '+'){
@@ -105,6 +108,7 @@ int main(int argc, char** argv){
 				}else{
 					fseek(f, -1, SEEK_CUR);
 					printToFile("incVector(v);\n", out);
+				
 				}
 				break;
 			case '-':
@@ -186,7 +190,7 @@ int main(int argc, char** argv){
 					counter++;
 				}
 				printf("Including file %s\n", fname);
-				pushBackVoidVector(fileVector, relativeFilePointer(f, backVoidVector(fnameVector), fname ));
+				pushBackVoidVector(fileVector, fremoveSpace(relativeFilePointer(f, backVoidVector(fnameVector), tmpfile()), fname ));
 				pushBackVoidVector(fnameVector, fname);
 				f = backVoidVector(fileVector);
 				printToFile("pushBackVoidVector(parentVectors, initVector()); tmp = backVoidVector(parentVectors); args_to_pass = curVector(v); if(args_to_pass == 0) pushBackVector(tmp, 0); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);\n", out);
@@ -205,4 +209,6 @@ int main(int argc, char** argv){
 	printToFile("}\n", out);
 	fclose(out);
 	fclose(f);
+	freeVoidVector(fnameVector);
+	freeVoidVector(fileVector);
 }

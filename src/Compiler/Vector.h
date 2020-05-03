@@ -247,3 +247,19 @@ void assignOrPushVector(vector* v, int index, int val){
 	}else
 		assignVector(v, index, val);
 }
+
+void shiftByVector(vector* v, int amt){
+	
+	if(v->curpos+amt >= v->size){
+		for(int i = 0; i < amt; i++){
+			if(v->curpos + 1 == v->size)
+				pushBackVector(v, 0);
+			v->curpos++;
+		}
+	}else{
+		v->curpos += amt;
+	}
+	
+	if(v->curpos < 0)
+		v->curpos = 0;
+}

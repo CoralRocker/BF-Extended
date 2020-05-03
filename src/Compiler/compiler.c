@@ -105,14 +105,34 @@ int main(int argc, char** argv){
 	printToFile("voidVector* parentVectors = initVoidVector(); pushBackVoidVector(parentVectors, initVector()); vector *tmp, *v = backVoidVector(parentVectors);\npushBackVector(v, 0);\nint args_to_pass;\n", out);
 
 	char c;
+	int tmp;
 	while((c = fgetc(f)) != EOF){
 		switch(c){
 			case '>':
-				printToFile("shiftRight(v);\n", out);
+				{;
+				tmp = 1;
+				while(fgetc(f) == '>')
+					tmp++;
+				fseek(f, -1, SEEK_CUR);
+				char str[256];
+				sprintf(&str, "shiftByVector(v, %d);\n", tmp);
+
+				printToFile(str, out);
 				break;
+				}
 			case '<':
-				printToFile("shiftLeft(v);\n", out);
+				{;
+				int tmp = -1;
+				while(fgetc(f) == '<')
+					tmp--;
+				fseek(f, -1, SEEK_CUR);
+				char str[256];
+				sprintf(&str, "shiftByVector(v, %d);\n", tmp);
+
+				printToFile(str, out);
+
 				break;
+				}
 			case '+':
 				
 				if(fgetc(f) == '+'){

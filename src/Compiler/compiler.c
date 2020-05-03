@@ -9,13 +9,19 @@ void printToFile(char* str, FILE* outfile){
 	fwrite(str, strlen(str), 1, outfile);
 }
 
+struct relativeFILE{
+	FILE* fptr;
+	char* fname;
+	char* absDirectory;
+} relativeFILE;
+
 /* Given a file pointer and a file names,
  * this method gives the absolute path of
  * the root directory.
  */
-char* rootDir(FILE* f, char* strname){
+char* rootDir(struct relativeFILE* rf){
         /* Get full file path */
-        int file_descriptor = fileno(f);
+        int file_descriptor = fileno(rf->fptr);
         char* dirname = malloc(1024);
         char fdpath[1024];
         ssize_t n;
@@ -24,9 +30,11 @@ char* rootDir(FILE* f, char* strname){
         if(n < 0)
                 return 0x00;
         dirname[n] = 0x0;
-        
+       
+	printf("Full file path: %s\n", dirname);
+
         /* Remove original file name from root directory, up to the first '/' */
-        int strLen = strlen(strname);
+        int strLen = strlen(rf->fname);
         for(int i = n - 1; i >= n - strLen; i--){
                 if(dirname[i] == '/')
                         break;
@@ -36,39 +44,51 @@ char* rootDir(FILE* f, char* strname){
         return dirname;
 }
 
+struct relativeFILE* initRF(FILE* f, char* fname){
+	struct relativeFILE *rf = malloc(sizeof(struct relativeFILE));
+	rf->fptr = f;
+	rf->fname = fname;
+	rf->absDirectory = rootDir(rf);
+}
+void freeRF(struct relativeFILE* rf){
+	fclose(rf->fptr);
+	free(rf);
+}
+
 /* Get a file pointer for a file relative to another file's location,
  * given a file name.
  */
-FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
-        /* Get Root Directory of file and string lengths */
-        char* rootdir = rootDir(f, strname);
-        int rlen = strlen(rootdir);
-        int alen = strlen(relativePath);
+FILE* relativeFilePointer(struct relativeFILE* rf, char* relativePath){
+	/* Get Root Directory of file and string lengths */
+	char* rootdir = rf->absDirectory;
+	int rlen = strlen(rootdir);
+	int alen = strlen(relativePath);
 
-        /* Add file name to absolute path */
-        for(int i = rlen; i < rlen+alen; i++)
-                rootdir[i] = relativePath[i-rlen];
+	/* Add file name to absolute path */
+	for(int i = rlen; i < rlen+alen; i++)
+		rootdir[i] = relativePath[i-rlen];
 
-        rootdir[rlen+alen] = 0x00;
-        
-        /* Open new file */
-        FILE* newFile = fopen(rootdir, "r");
-        
-        /* Check if file is good */
-        if(!newFile)
-                perror("ERROR");
+	rootdir[rlen+alen] = 0x00;
+	
+	/* Open new file */
+	FILE* newFile = fopen(rootdir, "r");
+	
+	/* Check if file is good */
+	if(!newFile)
+		perror("ERROR");
 
-        /* Free memory */
-        free(rootdir);
+	/* Free memory */
+	free(rootdir);
 
-        return newFile;
+	return newFile;
 }
+
 
 int main(int argc, char** argv){
 	/* FILES */
-	FILE *f = tmpfile();
-	fremoveSpace(fopen(argv[1], "r"), f);
+	FILE *f = fopen(argv[1], "r");//fremoveSpace(fopen(argv[1], "r"), fopen("test.dat", "wb+"));
 	FILE *out = fopen("bf.c", "w");
+
 	voidVector* fileVector = initVoidVector();
 	pushBackVoidVector(fileVector, f);
 	voidVector* fnameVector = initVoidVector();
@@ -190,7 +210,8 @@ int main(int argc, char** argv){
 					counter++;
 				}
 				printf("Including file %s\n", fname);
-				pushBackVoidVector(fileVector, fremoveSpace(relativeFilePointer(f, backVoidVector(fnameVector), tmpfile()), fname ));
+				printf("Old file: %s\nNew File: %s\n", backVoidVector(fnameVector), fname);
+				pushBackVoidVector(fileVector, relativeFilePointer(f, backVoidVector(fnameVector), fname));
 				pushBackVoidVector(fnameVector, fname);
 				f = backVoidVector(fileVector);
 				printToFile("pushBackVoidVector(parentVectors, initVector()); tmp = backVoidVector(parentVectors); args_to_pass = curVector(v); if(args_to_pass == 0) pushBackVector(tmp, 0); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);\n", out);

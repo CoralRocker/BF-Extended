@@ -155,8 +155,14 @@ int main(int argc, char** argv){
 			case '.':
 				printToFile("putchar(curVector(v));\n", out);
 				break;
-			case '[':
-				printToFile("while(curVector(v)){\n", out);
+			case '[': ;
+				long tmp = ftell(f);
+				if(fgetc(f) == '-' && fgetc(f) == ']'){
+					printToFile("setVector(v, 0);\n", out);
+				}else{
+					printToFile("while(curVector(v)){\n", out);
+					fseek(f, tmp, SEEK_SET);
+				}
 				break;
 			case ']':
 				printToFile("}\n", out);

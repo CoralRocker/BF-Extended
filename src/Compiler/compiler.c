@@ -49,9 +49,11 @@ struct relativeFILE* initRF(FILE* f, char* fname){
 	rf->fptr = f;
 	rf->fname = fname;
 	rf->absDirectory = rootDir(rf);
+	return rf;
 }
 void freeRF(struct relativeFILE* rf){
 	fclose(rf->fptr);
+	free(rf->absDirectory);
 	free(rf);
 }
 
@@ -60,7 +62,8 @@ void freeRF(struct relativeFILE* rf){
  */
 FILE* relativeFilePointer(struct relativeFILE* rf, char* relativePath){
 	/* Get Root Directory of file and string lengths */
-	char* rootdir = rf->absDirectory;
+	char* rootdir = malloc(1024);
+	strncpy(rootdir, rf->absDirectory, strlen(rf->absDirectory));
 	int rlen = strlen(rootdir);
 	int alen = strlen(relativePath);
 
@@ -69,13 +72,13 @@ FILE* relativeFilePointer(struct relativeFILE* rf, char* relativePath){
 		rootdir[i] = relativePath[i-rlen];
 
 	rootdir[rlen+alen] = 0x00;
-	
+
 	/* Open new file */
 	FILE* newFile = fopen(rootdir, "r");
 	
 	/* Check if file is good */
 	if(!newFile)
-		perror("ERROR");
+		perror("OOPSIES");
 
 	/* Free memory */
 	free(rootdir);
@@ -88,12 +91,10 @@ int main(int argc, char** argv){
 	/* FILES */
 	FILE *f = fopen(argv[1], "r");//fremoveSpace(fopen(argv[1], "r"), fopen("test.dat", "wb+"));
 	FILE *out = fopen("bf.c", "w");
-
-	voidVector* fileVector = initVoidVector();
-	pushBackVoidVector(fileVector, f);
-	voidVector* fnameVector = initVoidVector();
-	pushBackVoidVector(fnameVector, argv[1]);
-
+	
+	voidVector* rfVector = initVoidVector();
+	pushBackVoidVector(rfVector, initRF(f, argv[1]));
+	puts(((struct relativeFILE*)backVoidVector(rfVector))->absDirectory);
 	/* File Setup */
 	//Necessary Includes
 	printToFile("#include <stdio.h>\n#include \"Vector.h\"\n#include \"VoidVector.h\"\n", out);
@@ -171,7 +172,6 @@ int main(int argc, char** argv){
 						}
 					}
 				}else if(c == '/'){
-					puts("Single-line");
 					while(1){
 						c = fgetc(f);
 						if(c == '\n' || c == EOF)
@@ -210,17 +210,19 @@ int main(int argc, char** argv){
 					counter++;
 				}
 				printf("Including file %s\n", fname);
-				printf("Old file: %s\nNew File: %s\n", backVoidVector(fnameVector), fname);
-				pushBackVoidVector(fileVector, relativeFilePointer(f, backVoidVector(fnameVector), fname));
-				pushBackVoidVector(fnameVector, fname);
-				f = backVoidVector(fileVector);
+				printf("\tOld file: %s\n\tNew File: %s\n", ((struct relativeFILE*)backVoidVector(rfVector))->fname, fname);
+				printf("\tOld AbsDir: %s\n\n", ((struct relativeFILE*)backVoidVector(rfVector))->absDirectory);
+				
+				pushBackVoidVector(rfVector, initRF(relativeFilePointer(backVoidVector(rfVector), fname), fname));
+				puts(((struct relativeFILE*)backVoidVector(rfVector))->absDirectory);
+				f = ((struct relativeFILE*)backVoidVector(rfVector))->fptr;
 				printToFile("pushBackVoidVector(parentVectors, initVector()); tmp = backVoidVector(parentVectors); args_to_pass = curVector(v); if(args_to_pass == 0) pushBackVector(tmp, 0); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);\n", out);
 				break;
 				}
 			case '!':
-				fclose(popBackVoidVector(fileVector));
-				free(popBackVoidVector(fnameVector));
-				f = backVoidVector(fileVector);
+				free(((struct relativeFILE*)backVoidVector(rfVector))->fname);
+				freeRF(((struct relativeFILE*)popBackVoidVector(rfVector)));	
+				f = ((struct relativeFILE*)backVoidVector(rfVector))->fptr;
 				printToFile("tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); args_to_pass = curVector(tmp); for(int i=1; i<=args_to_pass;i++){assignOrPushVector(v, v->curpos+i-1, atVector(tmp, tmp->curpos+i));} freeVector(tmp);\n", out);
 				break;
 		}
@@ -228,8 +230,7 @@ int main(int argc, char** argv){
 
 	printToFile("\nfreeVector(v);\n", out);
 	printToFile("}\n", out);
+	freeRF(backVoidVector(rfVector));
+	freeVoidVector(rfVector);
 	fclose(out);
-	fclose(f);
-	freeVoidVector(fnameVector);
-	freeVoidVector(fileVector);
 }

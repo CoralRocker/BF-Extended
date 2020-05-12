@@ -243,6 +243,9 @@ void subVector(vector* v, int val){
 
 void assignOrPushVector(vector* v, int index, int val){
 	if(index >= v->size){
+		for(int i = v->curpos; i < index; i++)
+			if(i >= v->size)
+				pushBackVector(v, 0);
 		pushBackVector(v, val);
 	}else
 		assignVector(v, index, val);

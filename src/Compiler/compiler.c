@@ -116,7 +116,6 @@ int main(int argc, char** argv){
 				fseek(f, -1, SEEK_CUR);
 				char str[256];
 				sprintf(&str, "shiftByVector(v, %d);\n", tmp);
-
 				printToFile(str, out);
 				break;
 				}
@@ -175,8 +174,33 @@ int main(int argc, char** argv){
 			case '.':
 				printToFile("putchar(curVector(v));\n", out);
 				break;
-			case '[': ;
+			case '[': 
+				{;
 				long tmp = ftell(f);
+				if(fgetc(f) == '>'){
+					int RshiftCount = 1;
+					while(fgetc(f) == '>')
+						RshiftCount++;
+					fseek(f, -1, SEEK_CUR);
+					printf("RSHIFT: %d\n", RshiftCount);
+					if(fgetc(f) == '+' && fgetc(f) == '<'){
+						int LshiftCount = 1;
+						while(fgetc(f) == '<')
+							LshiftCount++;
+						fseek(f, -1, SEEK_CUR);
+						printf("LSHIFT: %d\n", LshiftCount);
+						if(LshiftCount != RshiftCount)
+							fseek(f, tmp, SEEK_SET);
+						else if(fgetc(f) == '-' && fgetc(f) == ']'){
+							puts("Found copy");
+							char tmp[256];
+							sprintf(&tmp, "assignOrPushVector(v, v->curpos + %d, curVector(v));\nsetVector(v, 0);\n", RshiftCount);
+							printToFile(tmp, out);
+							break;
+						}
+					}
+				}
+				fseek(f, tmp, SEEK_SET);
 				if(fgetc(f) == '-' && fgetc(f) == ']'){
 					printToFile("setVector(v, 0);\n", out);
 				}else{
@@ -184,6 +208,7 @@ int main(int argc, char** argv){
 					fseek(f, tmp, SEEK_SET);
 				}
 				break;
+				}
 			case ']':
 				printToFile("}\n", out);
 			case '/':

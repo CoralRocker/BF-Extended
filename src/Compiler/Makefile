@@ -3,11 +3,11 @@ CFLAGS=-Wall
 BF=../../ExamplePrograms/Breakpoints.b
 
 compiler: ./compiler.c
-	$(CC) $(CFLAGS) compiler.c -o Compiler
+	$(CC) $(CFLAGS) compiler.c -o Compiler.o
 
 test: compiler
-	./Compiler $(BF)
+	./Compiler.o $(BF)
 	$(CC) $(CFLAGS) bf.c -O0 -o bf.o
 
 clean:
-	rm Compiler bf.o bf.c
+	rm Compiler.o bf.o bf.c

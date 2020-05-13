@@ -1,0 +1,9 @@
+---All Optimizations are added cumulatively; e.g. 3rd opt contains 2 & 1, but not 4---
+
+NoOpt = no meaningful optimizations in place
+OptSum = addition and subtraction operations concatenated to be a small as possible
+OptSpace = meaningless whitespace removed from program (anything either inbetween @s, 's, "s)
+OptZero = [-] operations are shortened to *ptr = 0
+OptShift = Concatenate shifting operations into one.
+OptCopy = Concatenate copy operations down to one move operation
+

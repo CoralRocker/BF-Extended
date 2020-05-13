@@ -1,0 +1,80 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
+BF	Makefile	/^BF=..\/..\/ExamplePrograms\/Breakpoints.b$/;"	m	language:Make
+CC	Makefile	/^CC=gcc$/;"	m	language:Make
+CFLAGS	Makefile	/^CFLAGS=-Wall$/;"	m	language:Make
+DISREGARD_NEWLINE	PreProcess.h	/^const char DISREGARD_NEWLINE = '\\n';$/;"	v	language:C	typeref:typename:const char
+absDirectory	compiler.c	/^	char* absDirectory;$/;"	m	language:C	struct:relativeFILE	typeref:typename:char *	file:
+addVector	Vector.h	/^void addVector(vector* v, int val){$/;"	f	language:C	typeref:typename:void
+arr	Vector.h	/^	int* arr;$/;"	m	language:C	struct:vector	typeref:typename:int *
+arr	VoidVector.h	/^	void** arr;$/;"	m	language:C	struct:voidVector	typeref:typename:void **
+assignOrPushVector	Vector.h	/^void assignOrPushVector(vector* v, int index, int val){$/;"	f	language:C	typeref:typename:void
+assignVector	Vector.h	/^void assignVector(vector *v, int index, int value)$/;"	f	language:C	typeref:typename:void
+assignVoidVector	VoidVector.h	/^void assignVoidVector(voidVector *v, int index, void* value)$/;"	f	language:C	typeref:typename:void
+atVector	Vector.h	/^int atVector(vector *v, int index)$/;"	f	language:C	typeref:typename:int
+atVoidVector	VoidVector.h	/^void* atVoidVector(voidVector *v, int index)$/;"	f	language:C	typeref:typename:void *
+backVector	Vector.h	/^int backVector(vector *v)$/;"	f	language:C	typeref:typename:int
+backVoidVector	VoidVector.h	/^void* backVoidVector(voidVector *v)$/;"	f	language:C	typeref:typename:void *
+clean	Makefile	/^clean:$/;"	t	language:Make
+clearVector	Vector.h	/^void clearVector(vector *v)$/;"	f	language:C	typeref:typename:void
+clearVoidVector	VoidVector.h	/^void clearVoidVector(voidVector *v)$/;"	f	language:C	typeref:typename:void
+compiler	Makefile	/^compiler: .\/compiler.c$/;"	t	language:Make
+copyVector	Vector.h	/^void copyVector(vector *src, vector *dst, size_t size)$/;"	f	language:C	typeref:typename:void
+copyVoidVector	VoidVector.h	/^void copyVoidVector(voidVector *src, voidVector *dst, size_t size)$/;"	f	language:C	typeref:typename:void
+curVector	Vector.h	/^int curVector(vector* v){$/;"	f	language:C	typeref:typename:int
+curpos	Vector.h	/^	int curpos;$/;"	m	language:C	struct:vector	typeref:typename:int
+dataVector	Vector.h	/^int* dataVector(vector *v)$/;"	f	language:C	typeref:typename:int *
+dataVoidVector	VoidVector.h	/^void** dataVoidVector(voidVector *v)$/;"	f	language:C	typeref:typename:void **
+decVector	Vector.h	/^void decVector(vector* v){$/;"	f	language:C	typeref:typename:void
+e_t	TimeTest.py	/^    e_t = time.time()$/;"	v	language:Python
+eraseVector	Vector.h	/^void eraseVector(vector *v, int index)$/;"	f	language:C	typeref:typename:void
+eraseVoidVector	VoidVector.h	/^void eraseVoidVector(voidVector *v, int index)$/;"	f	language:C	typeref:typename:void
+fname	compiler.c	/^	char* fname;$/;"	m	language:C	struct:relativeFILE	typeref:typename:char *	file:
+fptr	compiler.c	/^	FILE* fptr;$/;"	m	language:C	struct:relativeFILE	typeref:typename:FILE *	file:
+freeRF	compiler.c	/^void freeRF(struct relativeFILE* rf){$/;"	f	language:C	typeref:typename:void
+freeVector	Vector.h	/^void freeVector(vector *v)$/;"	f	language:C	typeref:typename:void
+freeVoidVector	VoidVector.h	/^void freeVoidVector(voidVector *v)$/;"	f	language:C	typeref:typename:void
+fremoveSpace	PreProcess.h	/^FILE* fremoveSpace(FILE* infile, FILE *tmp){$/;"	f	language:C	typeref:typename:FILE *
+frontVector	Vector.h	/^int frontVector(vector *v)$/;"	f	language:C	typeref:typename:int
+frontVoidVector	VoidVector.h	/^void* frontVoidVector(voidVector *v)$/;"	f	language:C	typeref:typename:void *
+incVector	Vector.h	/^void incVector(vector* v){$/;"	f	language:C	typeref:typename:void
+initRF	compiler.c	/^struct relativeFILE* initRF(FILE* f, char* fname){$/;"	f	language:C	typeref:struct:relativeFILE *
+initVector	Vector.h	/^vector* initVector()$/;"	f	language:C	typeref:typename:vector *
+initVoidVector	VoidVector.h	/^voidVector* initVoidVector()$/;"	f	language:C	typeref:typename:voidVector *
+insertVector	Vector.h	/^void insertVector(vector *v, int index, int value)$/;"	f	language:C	typeref:typename:void
+insertVoidVector	VoidVector.h	/^void insertVoidVector(voidVector *v, int index, void* value)$/;"	f	language:C	typeref:typename:void
+main	bf.c	/^int main(){$/;"	f	language:C	typeref:typename:int
+main	compiler.c	/^int main(int argc, char** argv){$/;"	f	language:C	typeref:typename:int
+numRuns	TimeTest.py	/^numRuns = 25$/;"	v	language:Python
+popBackVector	Vector.h	/^void popBackVector(vector *v)$/;"	f	language:C	typeref:typename:void
+popBackVoidVector	VoidVector.h	/^void* popBackVoidVector(voidVector *v)$/;"	f	language:C	typeref:typename:void *
+printToFile	compiler.c	/^void printToFile(char* str, FILE* outfile){$/;"	f	language:C	typeref:typename:void
+pushBackVector	Vector.h	/^void pushBackVector(vector *v, int value)$/;"	f	language:C	typeref:typename:void
+pushBackVoidVector	VoidVector.h	/^void pushBackVoidVector(voidVector *v, void* value)$/;"	f	language:C	typeref:typename:void
+relativeFILE	compiler.c	/^struct relativeFILE{$/;"	s	language:C	file:
+relativeFILE	compiler.c	/^} relativeFILE;$/;"	v	language:C	typeref:struct:relativeFILE
+relativeFilePointer	compiler.c	/^FILE* relativeFilePointer(struct relativeFILE* rf, char* relativePath){$/;"	f	language:C	typeref:typename:FILE *
+rootDir	compiler.c	/^char* rootDir(struct relativeFILE* rf){$/;"	f	language:C	typeref:typename:char *
+s_t	TimeTest.py	/^    s_t = time.time()$/;"	v	language:Python
+setVector	Vector.h	/^void setVector(vector* v, int val){$/;"	f	language:C	typeref:typename:void
+shiftByVector	Vector.h	/^void shiftByVector(vector* v, int amt){$/;"	f	language:C	typeref:typename:void
+shiftLeft	Vector.h	/^int shiftLeft(vector* v){$/;"	f	language:C	typeref:typename:int
+shiftRight	Vector.h	/^int shiftRight(vector* v){$/;"	f	language:C	typeref:typename:int
+size	Vector.h	/^	int size;$/;"	m	language:C	struct:vector	typeref:typename:int
+size	VoidVector.h	/^	int size;$/;"	m	language:C	struct:voidVector	typeref:typename:int
+subVector	Vector.h	/^void subVector(vector* v, int val){$/;"	f	language:C	typeref:typename:void
+sumTime	TimeTest.py	/^sumTime = 0$/;"	v	language:Python
+swapVector	Vector.h	/^void swapVector(vector *v1, vector *v2)$/;"	f	language:C	typeref:typename:void
+swapVoidVector	VoidVector.h	/^void swapVoidVector(voidVector *v1, voidVector *v2)$/;"	f	language:C	typeref:typename:void
+test	Makefile	/^test: compiler$/;"	t	language:Make
+trimMemory	bf.c	/^void trimMemory(vector* v){int option = curVector(v);if(option==0){int pos = v->size-1;while(pos/;"	f	language:C	typeref:typename:void
+vector	Vector.h	/^typedef struct vector {$/;"	s	language:C
+vector	Vector.h	/^} vector;$/;"	t	language:C	typeref:struct:vector
+voidVector	VoidVector.h	/^typedef struct voidVector {$/;"	s	language:C
+voidVector	VoidVector.h	/^} voidVector;$/;"	t	language:C	typeref:struct:voidVector

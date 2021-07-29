@@ -10,7 +10,7 @@ USAGE = """Usage:
     M: Show current Memory array"""
 
 
-bf = BRAINFUCK.brainfuck(sys.argv[1])
+bf = BRAINFUCK.brainfuck(input("Enter where the BF file is: "))
 
 while 1:
     b = bf.step()

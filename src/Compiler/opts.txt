@@ -1,8 +1,12 @@
----All Optimizations are added cumulatively; e.g. 3rd opt contains 2 & 1, but not 4---
+> Format:
+> Starting at start of line, Name the optimization.
+> Once, named, enter a space, then '=' and another space and descibe your optimization
+> There should be a file called Your_Optimization_Name.dat in the directory for this to work
+
 
 NoOpt = no meaningful optimizations in place
 OptSum = addition and subtraction operations concatenated to be a small as possible
-OptSpace = meaningless whitespace removed from program (anything either inbetween @s, 's, "s)
+OptSpace = meaningless whitespace removed from program (anything either inbetween @s, 's, or "s)
 OptZero = [-] operations are shortened to *ptr = 0
 OptShift = Concatenate shifting operations into one.
 OptCopy = Concatenate copy operations down to one move operation

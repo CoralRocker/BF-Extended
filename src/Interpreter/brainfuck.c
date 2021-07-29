@@ -30,6 +30,8 @@ int main(int argc, char **argv)
 	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname));
 	FILE *f = backVector(fileArray);
 	inputFileArr = initVector();
+	
+	long *array;
 
 	char c; // Character
 	bool comment = false; //Check if code is commented out or not
@@ -211,6 +213,29 @@ int main(int argc, char **argv)
 				case 'd': // Debug Information
 					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
 					break;
+				case '$':
+					if(atVector(bfArray, bfArrPos)){
+						array = malloc(sizeof(long)*(long)atVector(bfArray, bfArrPos));
+					}else{
+						free(array);
+						array = NULL;
+					}
+					break;
+				case  '?':
+					if(array != NULL){
+						if(bfArrPos+1 >= bfArrSize)
+							pushBackVector(bfArray, array[(long)atVector(bfArray, bfArrPos)]);
+						else
+							assignVector(bfArray, bfArrPos + 1, array[(long)atVector(bfArray, bfArrPos)]);
+					}
+					break;
+				case '`':
+					if(array == NULL)
+						break;
+					array[(long)atVector(bfArray, bfArrPos)] = atVector(bfArray, bfArrPos+1);
+					break;
+
+
 			}
 		}
 

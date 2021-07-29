@@ -99,7 +99,8 @@ int main(int argc, char** argv){
 	pushBackVoidVector(rfVector, initRF(f, argv[1]));
 	puts(((struct relativeFILE*)backVoidVector(rfVector))->absDirectory);
 	
-	f = fremoveSpace(f, fopen("test.dat", "w+"));
+	//f = fremoveSpace(f, fopen("test.dat", "w+"));
+	f = fremoveSpace(f, tmpfile());
 	((struct relativeFILE*)backVoidVector(rfVector))->fptr = f;
 
 	/* File Setup */
@@ -275,6 +276,8 @@ int main(int argc, char** argv){
 				
 				puts(((struct relativeFILE*)backVoidVector(rfVector))->absDirectory);
 				f = ((struct relativeFILE*)backVoidVector(rfVector))->fptr;
+				f = fremoveSpace(f, tmpfile());
+				((struct relativeFILE*)backVoidVector(rfVector))->fptr = f;
 				printToFile("pushBackVoidVector(parentVectors, initVector()); tmp = backVoidVector(parentVectors); args_to_pass = curVector(v); if(args_to_pass == 0) pushBackVector(tmp, 0); for(int i=1; i<=args_to_pass; i++){pushBackVector(tmp, atVector(v, v->curpos+i));} v = backVoidVector(parentVectors);\n", out);
 				break;
 				}

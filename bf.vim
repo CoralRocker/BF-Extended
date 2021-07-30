@@ -11,6 +11,7 @@ let b:current_syntax = "bf"
 " Syntax to match
 " Comments
 syntax region BFComment start="/\*" end="\*/"
+syntax region BFComment start="//" end="\n"
 
 " Statements
 syntax match BFStatement "[+-,.]"
@@ -25,7 +26,7 @@ syntax match BFConstant "\[-\]"
 syntax region BFInclude start="@" end="@"
 syntax match BFInclude "!"
 syntax match BFInclude ".*\(todo\|TODO\|Todo\).*"
-
+syntax match BFInclude "\({\|}\)"
 
 " Highlighting Types
 highlight link BFStatement Keyword

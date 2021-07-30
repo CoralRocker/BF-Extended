@@ -6,7 +6,8 @@
 >+.[-]<[-]
 
 */
-/* If comments do not work, will print out a '1' */
+// +#[-] 
+/* If comments do not work, will print out a '1' or an '11' */
 
 /* Does scratch memory work? */
 +++ +++ >
@@ -28,6 +29,8 @@
    	5
 */
 
+
+/*
 /* Does return-to-0 operator work? */
 /* Expected output:
 	0
@@ -39,11 +42,9 @@
 [-]>[-]<
 
 /* Call Breakpoints-Extended.include.b */
-<<<<<<< HEAD
+/* First we check if the include grabs the right values from the calling file */
 [-]+>++++++++++++++++++++++++++++++++++++++++++++++++<
-@ExamplePrograms/Breakpoints-Extended.include.b@
-=======
-[-]
 @Breakpoints-Extended.include.b@
->>>>>>> Develop
+/* Check that the correct values were returned */
 
+#[-]>#[-] /* Should print out a one then a two. */

@@ -109,7 +109,7 @@ void openInclude(){
 	temp->prevLoopPos = bfLpPos;
 	
 	/* Set new program state */
-	int numItems = atVector(bfArray, bfArrPos);
+	int numItems = (int)atVector(bfArray, bfArrPos);
 	bfArray = temp->arrPtr;
 	bfLoop = temp->loopPtr;
 	bfArrPos = 0;
@@ -133,18 +133,23 @@ void openInclude(){
 void closeInclude(){	
 	/* Load old program state */
 	scratchpad *temp = popBackVector(ScratchArr);
-	int numItems = atVector(bfArray, bfArrPos);
+	int numItems = (int)atVector(bfArray, bfArrPos);
 	bfArray = temp->prevArr;
 	bfLoop = temp->prevLoop;
-<<<<<<< HEAD
+	
+	/**
+	 * The top for loop is from DEVELOP, the bottom is from MASTER.
+	 * IDK which is correct. FML
+	 */
+
 	for(int i = 0; i < numItems; i++)
 		assignVector(bfArray, temp->prevArrPos+i, atVector(temp->arrPtr, bfArrPos+i+1));
-=======
-	for(int i = 0; i < numItems; i++) // Load return variables in program
-		assignVector(bfArray, temp->prevArrPos+i, atVector(temp->arrPtr, bfArrPos+i));
+
+	// for(int i = 0; i < numItems; i++) // Load return variables in program
+	//  	assignVector(bfArray, temp->prevArrPos+i, atVector(temp->arrPtr, bfArrPos+i));
+	
 	
 	/* Free Memory */
->>>>>>> Develop
 	freeVector(temp->arrPtr);
 	freeVector(temp->loopPtr);
 
@@ -215,11 +220,11 @@ FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
  * If this method is used improperly, it is
  * possible to remove all the cells in memory, which would be an issue.*/
 void trimMemory(){
-	int option = atVector(bfArray, bfArrPos);//Get what cells to remove
-	if(option == 0){ // If cells to remove is 0, remove all cells after the last populated one
+	int option = (int)atVector(bfArray, bfArrPos);//Get what cells to remove
+	if(option == 0){ // If cells to remove is` 0, remove all cells after the last populated one
 		int pos = bfArrSize - 1;
 		while(pos != 0){
-			int val = atVector(bfArray, pos);
+			int val = (int)atVector(bfArray, pos);
 			if(val == 0)
 				popBackVector(bfArray);
 			else if(val != 0)

@@ -160,7 +160,7 @@ void swapVector(vector *v1, vector *v2)
 
 /* Gets the value of element at given index. Returns 0 if the index is invalid.
  */
-void* atVector(vector *v, int index)
+void* atVector(vector *v, uint64_t index)
 {
 	return (v->size > index && index >= 0) ? v->arr[index] : 0;
 }

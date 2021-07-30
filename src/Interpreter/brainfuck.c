@@ -25,10 +25,10 @@ int main(int argc, char **argv)
 
 	/* File and FileName Arrays */
 	vector *fileArray = initVector();
-	pushBackVector(fileArray, fopen(((argc>1)?argv[1]:fname), "r"));
+	pushBackVector(fileArray, fopen(((argc>1)?argv[1]:fname), "r")); // Send opened file into the file array. This is used to store files for interpretation
 	vector *fileNameArray = initVector();
-	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname));
-	FILE *f = backVector(fileArray);
+	pushBackVector(fileNameArray, ((argc>1)?argv[1]:fname)); // Send the opened file's name into the filename array for use later.
+	FILE *f = backVector(fileArray); 
 
 	char c; // Character
 	bool comment = false; //Check if code is commented out or not
@@ -44,6 +44,10 @@ int main(int argc, char **argv)
 				c = fgetc(f);
 				if(c == '*')
 					comment = true;
+				else if(c == '/')
+					while((c = fgetc(f))!=EOF){
+						if(c == '\n') break;
+					}
 				else
 					fseek(f, temp, SEEK_SET);
 				break;

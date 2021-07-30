@@ -30,6 +30,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 |\||[Trim program](#instruction-pointer-manipulation)
 |\\*|[Open Comment](#comments-)
 \*\\ |[Close Comment](#comments-)
+|\/\/|[Single-Line Comment](#comments-)
 |d|Prints Debug Information|
 
 ---
@@ -39,12 +40,12 @@ An extended version of the Brainf**k language that adds a small amount of added 
 ## Scratch Memory<br>
 ### Description
 &nbsp;&nbsp;&nbsp;&nbsp;Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended. <br>
-&nbsp;&nbsp;&nbsp;&nbsp;An unlimited number of scratch memory can be open at once, meaning that you can open scratch memory inside of scratch memory and have no issues. Only one parameter can be passed to the memory, however. I may or may not work on adding multiple parameters, as it would not be hard. Only the brainfuck.v.c interpreter has unlimited scratch memory as I have decided to deprecate the brainfuck.c interpreter. 
+&nbsp;&nbsp;&nbsp;&nbsp;An unlimited number of scratch memory can be open at once, meaning that you can open scratch memory inside of scratch memory and have no issues. Only one parameter can be passed to the memory. Only the brainfuck.v.c interpreter has unlimited scratch memory as I have decided to deprecate the brainfuck.c interpreter. The compiler has unlimited memory, just like the interpreter.
 
 ---
 ## Comments <br>
 ### Description
-&nbsp;&nbsp;&nbsp;&nbsp;C-Style comment blocks can be opened using _/*_ and closed using _*/_. Comments opened using _//_ and only lasting one line do not exist. 
+&nbsp;&nbsp;&nbsp;&nbsp;C-Style comment blocks can be opened using _/*_ and closed using _*/_. Comments opened using _//_ and only lasting one line also work.
 
 ---
 ## Instruction Pointer Manipulation<br>

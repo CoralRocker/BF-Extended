@@ -1,4 +1,3 @@
-/* Do Comments Work? */
 /*
 
 +++ +++
@@ -8,7 +7,6 @@
 */
 // +#[-] 
 /* If comments do not work, will print out a '1' or an '11' */
-
 /* Does scratch memory work? */
 +++ +++ >
 +++ +++ 

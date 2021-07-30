@@ -156,13 +156,11 @@ int main(int argc, char **argv)
 								fputc(c, tempStream);
 							}
 							fclose(tempStream);
-							//puts(tempBuf);
 							pushBackVector(fileArray, fopen(tempBuf, "r"));
 							f = backVector(fileArray);
 							if(f==NULL)
 								puts("!!! FILE NAME INVALID !!!");
 							openInclude();
-							//openScratchPad();
 							free(tempBuf);
 						break;
 						}

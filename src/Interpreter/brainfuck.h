@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 /* Vectors and Variables Needed */
-vector *bfArray, *bfLoop, *ScratchArr;
+vector *bfArray, *bfLoop, *ScratchArr, *inputFileArr;
 uint64_t bfArrSize = 1, bfArrPos = 0, bfLpPos = 0;
 
 /* Text Color Constants */
@@ -34,7 +34,7 @@ const char* KNRM = "\033[0m";
 /* Boolean Definition */
 typedef enum boolean {false, true} bool;
 
-/* Scratchpad save method.
+/* Scratchpad save structure.
  * This allows us to save all the memory from the program
  * state to a single structure, which facilitates the opening
  * and closing of scratchpads. 
@@ -48,7 +48,7 @@ typedef struct scratchpad {
 /* Opens up a classic style scratchpad */
 void openScratchPad(){
 	/* Save program state to a scratchpad */
-	scratchpad *temp = malloc(sizeof(scratchpad));
+	scratchpad *temp = (scratchpad*)malloc(sizeof(scratchpad));
 	temp->arrPtr = initVector();
 	temp->loopPtr = initVector();
 	temp->prevArr = bfArray;
@@ -76,7 +76,7 @@ void openScratchPad(){
  */
 void closeScratchPad(){	
 	/* Load old program state from previously save scratchpad */
-	scratchpad *temp = popBackVector(ScratchArr);
+	scratchpad *temp = (scratchpad*)popBackVector(ScratchArr);
 	bfArray = temp->prevArr;
 	bfLoop = temp->prevLoop;
 
@@ -218,7 +218,9 @@ FILE* relativeFilePointer(FILE* f, char* strname, char* relativePath){
 }
 /* Remove specifc cells and free their memory.
  * If this method is used improperly, it is
- * possible to remove all the cells in memory, which would be an issue.*/
+ * possible to remove all the cells in memory,
+ * which would be an issue.
+ */
 void trimMemory(){
 	int option = (int)atVector(bfArray, bfArrPos);//Get what cells to remove
 	if(option == 0){ // If cells to remove is` 0, remove all cells after the last populated one

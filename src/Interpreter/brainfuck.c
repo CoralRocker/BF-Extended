@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 					break;
 
 				case ',': //Get input from keyboard
-					assignVector(bfArray, bfArrPos, (void*) getchar());
+					assignVector(bfArray, bfArrPos, (void*) fgetc((inputFileArr->size == 0)?stdin : backVector(inputFileArr)));
 					break;
 
 				case '[': //Start loop
@@ -132,7 +132,7 @@ int main(int argc, char **argv)
 					break;
 					}
 				case '#':
-					printf("%d", atVector(bfArray, bfArrPos));
+					printf("%d", (int) atVector(bfArray, bfArrPos));
 					break;
 				case '@': //Open include file
 					{	
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 						
 						/* Check for error */
 						if(f==NULL)
-							printf("ERROR: %s: Invalid File Name\n");
+							printf("ERROR: %s: Invalid File Name\n", tempBuf);
 						/* Open Include System */
 						openInclude();
 						/* Free Memory */
@@ -180,11 +180,40 @@ int main(int argc, char **argv)
 				case '^': //Return-to-zero operator
 					bfArrPos = 0;
 					break;
+				case '%': //Open separate file
+					{
+						int numChars = (int) atVector(bfArray, bfArrPos);
+						if(numChars != 0){
+							char* filename = malloc(numChars+1);
+							for(int i = 0; i < numChars; i++){
+								filename[i] = atVector(bfArray, bfArrPos+1+i);
+							}
+							filename[numChars]=0x00;
+							puts(filename);
+							FILE* newFile = fopen(filename, "r");
+							if(!newFile){								
+								freeVector(bfArray);
+								freeVector(bfLoop);
+								freeVector(ScratchArr);
+								freeVector(fileArray);
+								freeVector(inputFileArr);
+								printf("ERROR: %s is an invalid filename. Exiting program\n", filename);
+								free(filename);
+								return 0;
+							}
+							pushBackVector(inputFileArr, newFile);
+							free(filename);
+						}else{
+							popBackVector(inputFileArr);
+						}
+					break;
+					}
 				case 'd': // Debug Information
 					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
 					break;
 			}
 		}
+
 	}
 
 	/* Free Vectors and Arrays */
@@ -192,7 +221,8 @@ int main(int argc, char **argv)
 	freeVector(bfLoop);
 	freeVector(ScratchArr);
 	freeVector(fileArray);
-	
+	freeVector(inputFileArr);
+
 	printf("\n");
 	
 	/* Close Files */

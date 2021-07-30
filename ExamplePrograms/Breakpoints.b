@@ -1,3 +1,4 @@
+/*
 Testing breakFunctions for errors
 -------------------------
 COMPLETE EXPECTED OUTPUT:
@@ -5,13 +6,14 @@ COMPLETE EXPECTED OUTPUT:
 0
 0
 -------------------------
+*/
+
 
 Loops Work?
 ++++++++++++++++++++++++++++++++++++++++++++++++.[->+<]>.[-]++++++++++.[-]<
 Expected output: 00
 Wrong output: 0
 	      6?
-
 Pointer Loopback?
 [-]++++++++[->++++++<]>[-<+>]<<<<<.[-]++++++++++.[-]<
 Expected output: 0

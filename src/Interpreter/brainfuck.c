@@ -215,27 +215,27 @@ int main(int argc, char **argv)
 					// Abnormal debug info
 					printf("Current Scratchpads: %d\n", ScratchArr->size);
 					break;
-				case '$':
-					if(atVector(bfArray, bfArrPos)){
-						array = malloc(sizeof(long)*(long)atVector(bfArray, bfArrPos));
-					}else{
-						free(array);
-						array = NULL;
-					}
-					break;
-				case  '?':
-					if(array != NULL){
-						if(bfArrPos+1 >= bfArrSize)
-							pushBackVector(bfArray, array[(long)atVector(bfArray, bfArrPos)]);
-						else
-							assignVector(bfArray, bfArrPos + 1, array[(long)atVector(bfArray, bfArrPos)]);
-					}
-					break;
-				case '`':
-					if(array == NULL)
-						break;
-					array[(long)atVector(bfArray, bfArrPos)] = atVector(bfArray, bfArrPos+1);
-					break;
+			//	case '$':
+			//		if(atVector(bfArray, bfArrPos)){
+			//			array = malloc(sizeof(long)*(long)atVector(bfArray, bfArrPos));
+			//		}else{
+			//			free(array);
+			//			array = NULL;
+			//		}
+			//		break;
+			//	case  '?':
+			//		if(array != NULL){
+			//			if(bfArrPos+1 >= bfArrSize)
+			//				pushBackVector(bfArray, array[(long)atVector(bfArray, bfArrPos)]);
+			//			else
+			//				assignVector(bfArray, bfArrPos + 1, array[(long)atVector(bfArray, bfArrPos)]);
+			//		}
+			//		break;
+			//	case '`':
+			//		if(array == NULL)
+			//			break;
+			//		array[(long)atVector(bfArray, bfArrPos)] = atVector(bfArray, bfArrPos+1);
+			//		break;
 
 
 			}

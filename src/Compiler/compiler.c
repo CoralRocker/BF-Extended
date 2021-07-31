@@ -257,10 +257,8 @@ int main(int argc, char** argv){
 				break;
 			case '{':
 				printToFile("pushBackVoidVector(parentVectors, initVector());", out);
-				printToFile("if(curVector(v) == 0) pushBackVector(backVoidVector(parentVectors), 0);", out);
-				printToFile("else { int curv = curVector(v); for(int i = 1; i <= curv; i++) {", out);
-				printToFile("pushBackVector(backVoidVector(parentVectors),atVector(v, v->curpos+i));}", out);
-				printToFile("} v = backVoidVector(parentVectors);\n", out);
+				printToFile("pushBackVector(backVoidVector(parentVectors),curVector(v));", out);
+				printToFile("v = backVoidVector(parentVectors);\n", out);
 				break;
 			case '}':
 				printToFile("tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); setVector(v, curVector(tmp)); freeVector(tmp);\n", out);

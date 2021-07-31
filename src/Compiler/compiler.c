@@ -244,7 +244,7 @@ int main(int argc, char** argv){
 				printToFile("printf(\"%d\", curVector(v));\n", out);
 				break;
 			case 'd':
-				printToFile("printf(\"Current Cell: %d\\nCurrent Size: %d\\nCurrent Value: %d\\n\", v->curpos, v->size, curVector(v));\n", out);
+				printToFile("printf(\"Current Cell: %d\\nCurrent Size: %d\\nCurrent Value: %d\\nCurrent Value (Hex): %X\\n\", v->curpos, v->size, curVector(v), curVector(v));\n", out);
 				break;
 			case '^':
 				printToFile("v->curpos=0;\n", out);
@@ -256,7 +256,11 @@ int main(int argc, char** argv){
 				printToFile("trimMemory(v);\n", out); //Call function declared earlier. More efficient 
 				break;
 			case '{':
-				printToFile("pushBackVoidVector(parentVectors, initVector()); pushBackVector(backVoidVector(parentVectors), curVector(v)); v = backVoidVector(parentVectors);\n", out);
+				printToFile("pushBackVoidVector(parentVectors, initVector());", out);
+				printToFile("if(curVector(v) == 0) pushBackVector(backVoidVector(parentVectors), 0);", out);
+				printToFile("else { int curv = curVector(v); for(int i = 1; i <= curv; i++) {", out);
+				printToFile("pushBackVector(backVoidVector(parentVectors),atVector(v, v->curpos+i));}", out);
+				printToFile("} v = backVoidVector(parentVectors);\n", out);
 				break;
 			case '}':
 				printToFile("tmp = popBackVoidVector(parentVectors); v = backVoidVector(parentVectors); setVector(v, curVector(tmp)); freeVector(tmp);\n", out);

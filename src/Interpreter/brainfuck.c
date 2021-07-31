@@ -211,7 +211,9 @@ int main(int argc, char **argv)
 					break;
 					}
 				case 'd': // Debug Information
-					printf("\nCurrent Cell: %X\nCurrent Size: %X\nCurrent Value: %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos));
+					printf("\nCurrent Cell: %d\nCurrent Size: %d\nCurrent Value: %d\nCurrent Value (Hex): %X\n", bfArrPos, bfArrSize, atVector(bfArray,bfArrPos), atVector(bfArray, bfArrPos));
+					// Abnormal debug info
+					printf("Current Scratchpads: %d\n", ScratchArr->size);
 					break;
 				case '$':
 					if(atVector(bfArray, bfArrPos)){

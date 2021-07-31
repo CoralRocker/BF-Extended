@@ -8,7 +8,7 @@ print(f"Running {numRuns} times")
 for i in range(0, numRuns):
     print(f"Run {i+1}/{numRuns}")
     s_t = time.time()
-    call("./speed.b.o", stdout=DEVNULL)
+    call("./bf.o", stdout=DEVNULL)
     e_t = time.time()
     sumTime += (e_t - s_t)
 print(f"Took an average of {sumTime/numRuns} seconds")

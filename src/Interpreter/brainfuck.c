@@ -137,7 +137,8 @@ int main(int argc, char **argv)
 					printf("%d", (int) atVector(bfArray, bfArrPos));
 					break;
 				case '@': //Open include file
-					{	
+					{
+						puts("including A new file!");
 						/* Get File Name */
 						char* tempBuf;
 						size_t tempLen;
@@ -164,6 +165,7 @@ int main(int argc, char **argv)
 					}
 				case '!': //Close include file
 					{
+						puts("closing a file!");
 						/* Close includes and files */
 						closeInclude();
 						fclose(popBackVector(fileArray));

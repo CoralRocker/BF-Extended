@@ -1,4 +1,4 @@
-# Brainfuck Extended
+# Brainf**k Extended
 An extended version of the Brainf**k language that adds a small amount of added Features
 
 ---
@@ -35,12 +35,12 @@ An extended version of the Brainf**k language that adds a small amount of added 
 
 ---
 
-# Brainfuck Extended
+# Brainf**k Extended
 ---
 ## Scratch Memory<br>
 ### Description
 &nbsp;&nbsp;&nbsp;&nbsp;Added special _scratch memory_, which basically acts as a disposible area where you can do simple calculations. It can only have one value inputed: that of the cell in which it was called. Once called with the _{_ symbol, anything within its boundaries has no effect on the parent program. Close it off with the _}_ symbol. It returns to its calling cell the value of the cell on which it was ended. <br>
-&nbsp;&nbsp;&nbsp;&nbsp;An unlimited number of scratch memory can be open at once, meaning that you can open scratch memory inside of scratch memory and have no issues. Only one parameter can be passed to the memory. Only the brainfuck.v.c interpreter has unlimited scratch memory as I have decided to deprecate the brainfuck.c interpreter. The compiler has unlimited memory, just like the interpreter.
+&nbsp;&nbsp;&nbsp;&nbsp;An unlimited number of scratch memory can be open at once, meaning that you can open scratch memory inside of scratch memory and have no issues. Only one parameter can be passed to the memory. Only the brainf**k.v.c interpreter has unlimited scratch memory as I have decided to deprecate the brainf**k.c interpreter. The compiler has unlimited memory, just like the interpreter.
 
 ---
 ## Comments <br>
@@ -75,7 +75,7 @@ An extended version of the Brainf**k language that adds a small amount of added 
 ---
 ## File Including
 ### Description
-&nbsp;&nbsp;&nbsp;&nbsp;The _@_ and _!_ operators can be used to open a brainfuck file and run it, and to close said file, respectively. The called file is run isolated from the rest of the program's memory. When calling the file, the cell in which it was called indicates the number of parameters to pass to the included file. Parameters are read starting from the cell after the file was called. Likewise, when exiting an include with _!_, the number of arguments to return is stored in the current cell, and the arguments themselves are in the proceeding cells. Multiple files can be included recursively. In this manner, it is possible to find yourself in an infinite loop, so be careful. Files are included relative to the calling file. For example, if the parent file is in a directory called "bar/foo/", and the interpreter and include file are in the directory "bar/", the parent file should call `@../my_file.b@`.  
+&nbsp;&nbsp;&nbsp;&nbsp;The _@_ and _!_ operators can be used to open a brainf**k file and run it, and to close said file, respectively. The called file is run isolated from the rest of the program's memory. When calling the file, the cell in which it was called indicates the number of parameters to pass to the included file. Parameters are read starting from the cell after the file was called. Likewise, when exiting an include with _!_, the number of arguments to return is stored in the current cell, and the arguments themselves are in the proceeding cells. Multiple files can be included recursively. In this manner, it is possible to find yourself in an infinite loop, so be careful. Files are included relative to the calling file. For example, if the parent file is in a directory called "bar/foo/", and the interpreter and include file are in the directory "bar/", the parent file should call `@../my_file.b@`.  
 ### Example
 **EX.b**
 ```

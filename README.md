@@ -10,8 +10,8 @@
 
 # READMEs
 
-## [Information On Code](CODE.md)
+## [Information On Compilers, Interpretters, and Code written for BF-E](CODE.md)
 
-## [Information On Language](BRAINFUCK.md)
+## [Information On The Brainfuck Language](BRAINFUCK.md)
 
 ## [Information On Example Programs](ExamplePrograms/README.md)
